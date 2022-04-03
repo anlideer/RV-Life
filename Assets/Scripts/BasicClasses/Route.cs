@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum RouteType 
 {
-    HighWay, Normal, Countryside, MountainUp, MountainDown, MountainNormal
+    HighWay=1, Normal=2, Countryside=3, MountainUp=4, MountainDown=5, MountainNormal=6
 };
 
 public class Route
