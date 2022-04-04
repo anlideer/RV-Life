@@ -18,7 +18,7 @@ public class HeaderUI : MonoBehaviour
     {
         moneyText.text = GlobalStates.currentMoney.GetStringShown();
         timeText.text = GlobalStates.currentTime.GetStringShown();
-        locationText.text = GlobalStates.currentLocation.location;
+        locationText.text = GlobalStates.currentLocation.GetLocationString();
         health.fillAmount = GlobalStates.currentHealth;
         energy.fillAmount = GlobalStates.currentEnergy;
     }
