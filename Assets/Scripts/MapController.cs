@@ -6,6 +6,8 @@ public class MapController : MonoBehaviour
 {
     [Header("Pin object")]
     public GameObject pin;
+    [Header("Prefab")]
+    public GameObject arrowPrefab;
     [Header("Camera movement")]
     public Transform leftTop;
     public Transform rightBottom;
@@ -16,23 +18,30 @@ public class MapController : MonoBehaviour
     public float zoomOutLimit = 5f;
     public float zoomInterval = 0.2f;
 
-    private GameObject[] nodes;
+    private Dictionary<string, GameObject> nodeDic = new Dictionary<string, GameObject> ();
     private GameObject currentNode;
     private Camera cam;
 
     private bool isDragging = false;
     private Vector3 camPos;
     private Vector3 mousePos;
+    private List<GameObject> arrows = new List<GameObject>();
     
 
     private void Start()
     {
         // get nodes
         cam = Camera.main;
-        nodes = GameObject.FindGameObjectsWithTag("Node");
+        GameObject[] nodes = GameObject.FindGameObjectsWithTag("Node");
+        foreach(var node in nodes)
+        {
+            nodeDic[node.name] = node;
+        }
+
         PlacePin();
         ZoomIntoCurrent();
         camPos = cam.transform.position;
+        ShowRoutesFromCurrent();
     }
 
     private void Update()
@@ -46,14 +55,11 @@ public class MapController : MonoBehaviour
     private void PlacePin()
     {
         string location = GlobalStates.currentLocation.cityName;
-        foreach(var node in nodes)
+        if (nodeDic.ContainsKey(location))
         {
-            if (node.name == location)
-            {
-                pin.transform.position = node.transform.position;
-                currentNode = node;
-                break;
-            }
+
+            currentNode = nodeDic[location];
+            pin.transform.position = nodeDic[location].transform.position;
         }
     }
 
@@ -143,5 +149,31 @@ public class MapController : MonoBehaviour
             return 1.2f;
         else
             return 1f;
+    }
+
+    // init an arrow in right position
+    private GameObject CreateArrow(Transform a, Transform b)
+    {
+        GameObject obj = Instantiate(arrowPrefab);
+        ArrowCtrl ac = obj.GetComponent<ArrowCtrl>();
+        ac.startPoint = a;
+        ac.endPoint = b;
+        ac.UpdatePointing();
+        return obj;
+    }
+
+    // show every route from current node
+    private void ShowRoutesFromCurrent()
+    {
+        List<Route> routes = currentNode.GetComponent<Node>().routes;
+        foreach (var route in routes)
+        {
+            Node n = route.destination;
+            if (nodeDic.ContainsKey(n.cityName))
+            {
+                arrows.Add(CreateArrow(currentNode.transform, nodeDic[n.cityName].transform));
+            }
+        }
+
     }
 }

@@ -6,55 +6,18 @@ public class ArrowCtrl : MonoBehaviour
 {
     public Transform realArrow;
 
-    private bool updating = true;
-    public Transform startPoint;
+    public Transform startPoint;    // assign an obj near the tail as the startPoint if you test with FollowMouse().
     public Transform endPoint;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        FollowMouse();
-        /*
-        if (startPoint && endPoint)
-        {
-            UpdatePointing();
-        }
-        */
-    }
-
-    // follow the mouse
-    public void FollowMouse()
-    {
-        UpdateArrow(startPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        //UpdatePointing();
     }
 
     // adjust the arrow between two objects (point at the border of the object instead of the center)
-    private void UpdatePointing()
+    public void UpdatePointing()
     {
-        float halfLen = endPoint.localScale.x / 2;
-        float x0 = endPoint.position.x;
-        float y0 = endPoint.position.y;
-        Vector2 s = new Vector2(startPoint.position.x, startPoint.position.y);
-        Vector2 t = new Vector2(x0, y0);
-        // check crosspoint
-        Vector2 intersection = GetIntersection(s, t, new Vector2(x0 - halfLen, y0 - halfLen), new Vector2(x0 - halfLen, y0 + halfLen));
-        if (intersection == Vector2.zero) 
-            intersection = GetIntersection(s, t, new Vector2(x0 + halfLen, y0 - halfLen), new Vector2(x0 + halfLen, y0 + halfLen));
-        if (intersection == Vector2.zero)
-            intersection = GetIntersection(s, t, new Vector2(x0 - halfLen, y0 + halfLen), new Vector2(x0 + halfLen, y0 + halfLen));
-        if (intersection == Vector2.zero)
-            intersection = GetIntersection(s, t, new Vector2(x0 - halfLen, y0 - halfLen), new Vector2(x0 + halfLen, y0 - halfLen));
-        // update arrow
-        if (intersection != Vector2.zero)
-        {
-            Vector3 realEnd = new Vector3(intersection.x, intersection.y, 0);
-            UpdateArrow(startPoint.position, realEnd);
-        }
-        else
-        {
-            Debug.LogWarning("Two nodes should have intersection. Check the codes.");
-        }
-
+        UpdateArrow(startPoint.position, endPoint.position);
     }
 
     // adjust the arrow according to s->t
@@ -66,13 +29,23 @@ public class ArrowCtrl : MonoBehaviour
         t.z = 0;
         transform.right = t - s;
         // length
-        float dis = Vector3.Distance(s, t);
+        float dis = Vector3.Distance(s, t) - endPoint.GetComponent<SpriteRenderer>().bounds.size.x / 2; // minus realsize/2
         dis /= realArrow.localScale.x;
         Vector2 originalSize = realArrow.GetComponent<SpriteRenderer>().size;
         originalSize.x = dis;
         realArrow.GetComponent<SpriteRenderer>().size = originalSize;
     }
 
+
+    /*
+    // follow the mouse
+    public void FollowMouse()
+    {
+        UpdateArrow(startPoint.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+    }
+    */
+
+    /*
     // set the start point
     public void SetStartPoint(Transform trans)
     {
@@ -91,7 +64,9 @@ public class ArrowCtrl : MonoBehaviour
             UpdatePointing();
         }
     }
+    */
 
+    /*
     // calculate the crosspoint
     private Vector2 GetIntersection(Vector2 lineAStart, Vector2 lineAEnd, Vector2 lineBStart, Vector2 lineBEnd)
     {
@@ -163,5 +138,6 @@ public class ArrowCtrl : MonoBehaviour
             && ((y >= start.y && y <= end.y)
                 || (y >= end.y && y <= start.y));
     }
+    */
 
 }

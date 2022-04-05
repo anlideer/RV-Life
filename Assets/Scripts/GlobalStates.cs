@@ -9,4 +9,5 @@ public class GlobalStates : MonoBehaviour
     public static MyLocation currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
     public static float currentHealth = 1f; // 0-1f
     public static float currentEnergy = 1f; // 0-1f
+
 }

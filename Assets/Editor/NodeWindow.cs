@@ -30,7 +30,7 @@ public class NodeWindow : EditorWindow
 
     private void LoadFromPersistence()
     {
-        string path = "Assets/Editor/NodeData";
+        string path = "Assets/Resources/NodeData";
 
         // fetch the data back to the editor
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Node");
@@ -74,7 +74,7 @@ public class NodeWindow : EditorWindow
 
     private void SaveToPersistence()
     {
-        string path = "Assets/Editor/NodeData";
+        string path = "Assets/Resources/NodeData";
         GameObject[] objs = GameObject.FindGameObjectsWithTag("Node");
         foreach (var obj in objs)
         {
@@ -100,14 +100,15 @@ public class NodeWindow : EditorWindow
     // simply copy the persistence to be a backup (only one backup exists)
     private void BackUpData()
     {
-        string path = "Assets/Editor/NodeData";
+        string path = "Assets/Resources/NodeData";
+        string backuppath = "Assets/Editor/NodeData";
         string[] files = Directory.GetFiles(path);
         foreach (string f in files)
         {
             if (Path.GetExtension(f) == ".txt")
             {
                 string tmps = File.ReadAllText(f);
-                File.WriteAllText(Path.Combine(path, Path.GetFileNameWithoutExtension(f) + ".backup"), tmps);
+                File.WriteAllText(Path.Combine(backuppath, Path.GetFileNameWithoutExtension(f) + ".backup"), tmps);
             }
         }
         Debug.Log("Back up done");
@@ -116,8 +117,9 @@ public class NodeWindow : EditorWindow
     // save from back up (back up to normal)
     private void RecoverFromBackup()
     {
-        string path = "Assets/Editor/NodeData";
-        string[] files = Directory.GetFiles(path);
+        string path = "Assets/Resources/NodeData";
+        string backuppath = "Assets/Editor/NodeData";
+        string[] files = Directory.GetFiles(backuppath);
         foreach(string f in files)
         {
             if (Path.GetExtension(f) == ".backup")
