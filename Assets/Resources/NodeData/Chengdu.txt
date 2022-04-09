@@ -1,1 +1,3 @@
-Dujiangyan,80,1,0.3
+Dujiangyan,80,1,0.2
+Yaan,130,1,0.2
+Chongqing,303,1,0.3
