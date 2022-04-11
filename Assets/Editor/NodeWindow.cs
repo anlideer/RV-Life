@@ -67,7 +67,10 @@ public class NodeWindow : EditorWindow
                     Debug.Log("Unable to find the data for " + obj.name);
                 }
             }
-            catch { }
+            catch (System.Exception e)
+            {
+                Debug.LogWarning(string.Format("{0}: {1}", obj.name, e));
+            }
         }
         Debug.Log("Load done");
     }

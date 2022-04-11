@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour
                     n.routes.Add(tmpr);
                 }
             }
-            catch 
+            catch (System.Exception e)
             {
-                Debug.LogWarning("Error when reading data for city " + obj.name);
+                Debug.LogWarning(string.Format("Error when reading data for city {0}: {1}", obj.name, e));
             }
         }
         Debug.Log("Load map data done");

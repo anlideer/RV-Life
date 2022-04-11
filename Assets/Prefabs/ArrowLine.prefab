@@ -69,8 +69,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1205477897
-  m_SortingLayer: -1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -943090487609298773, guid: 978692cd34df76544a6f13e809897556, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -156,3 +156,5 @@ MonoBehaviour:
   realArrow: {fileID: 6715932709633094599}
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
+  blackArrow: {fileID: -943090487609298773, guid: 978692cd34df76544a6f13e809897556, type: 3}
+  redArrow: {fileID: -8959088042007055262, guid: e307e430f96aa1040a1eaa0c0ff4210a, type: 3}

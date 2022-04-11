@@ -17,6 +17,8 @@ public class MapController : MonoBehaviour
     public float zoomInLimit = 1f;
     public float zoomOutLimit = 5f;
     public float zoomInterval = 0.2f;
+    [Header("Depart UI")]
+    public DepartUI departUI;
 
     private Dictionary<string, GameObject> nodeDic = new Dictionary<string, GameObject> ();
     private GameObject currentNode;
@@ -25,7 +27,8 @@ public class MapController : MonoBehaviour
     private bool isDragging = false;
     private Vector3 camPos;
     private Vector3 mousePos;
-    private List<GameObject> arrows = new List<GameObject>();
+    private Dictionary<string, GameObject> arrows = new Dictionary<string, GameObject>();
+    private GameObject selectedDes;
     
 
     private void Start()
@@ -98,6 +101,7 @@ public class MapController : MonoBehaviour
             mousePos = Input.mousePosition;
             camPos = cam.transform.position;
             isDragging = true;
+            DetectClickNode();
         }
         if (Input.GetMouseButtonUp(0))
         {
@@ -171,8 +175,51 @@ public class MapController : MonoBehaviour
             Node n = route.destination;
             if (nodeDic.ContainsKey(n.cityName))
             {
-                arrows.Add(CreateArrow(currentNode.transform, nodeDic[n.cityName].transform));
+                GameObject obj = CreateArrow(currentNode.transform, nodeDic[n.cityName].transform);
+                arrows[n.cityName] = obj;
             }
+        }
+
+    }
+
+    // detect click node
+    private void DetectClickNode()
+    {
+        bool flag = false;
+        RaycastHit2D[] hitObjs = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        foreach (var hit in hitObjs)
+        {
+            Debug.Log(hit.collider.name);
+            if (hit.collider.tag == "Node")
+            {
+                if (arrows.ContainsKey(hit.collider.name))
+                {
+                    selectedDes = hit.collider.gameObject;
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        if (flag)
+        {
+            foreach (string city in arrows.Keys)
+            {
+                if (city != selectedDes.name)
+                    arrows[city].GetComponent<ArrowCtrl>().SetToRed(false);
+                else
+                    arrows[city].GetComponent<ArrowCtrl>().SetToRed(true);
+            }
+
+            // update depart ui
+            foreach(var r in currentNode.GetComponent<Node>().routes)
+            {
+                if (r.destination.name == selectedDes.name)
+                {
+                    departUI.SelectDestination(r);
+                    break;
+                }
+            }    
         }
 
     }

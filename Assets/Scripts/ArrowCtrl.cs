@@ -9,6 +9,9 @@ public class ArrowCtrl : MonoBehaviour
     public Transform startPoint;    // assign an obj near the tail as the startPoint if you test with FollowMouse().
     public Transform endPoint;
 
+    public Sprite blackArrow;
+    public Sprite redArrow;
+
     private void Start()
     {
         //UpdatePointing();
@@ -25,17 +28,24 @@ public class ArrowCtrl : MonoBehaviour
     {
         // direction
         s.z = 0;
-        transform.position = s;
+        transform.position = s + (t-s).normalized* startPoint.GetComponent<SpriteRenderer>().bounds.size.x/2;
         t.z = 0;
         transform.right = t - s;
         // length
-        float dis = Vector3.Distance(s, t) - endPoint.GetComponent<SpriteRenderer>().bounds.size.x / 2; // minus realsize/2
+        float dis = Vector3.Distance(s, t) - endPoint.GetComponent<SpriteRenderer>().bounds.size.x / 2 - startPoint.GetComponent<SpriteRenderer>().bounds.size.x / 2; // minus realsize/2
         dis /= realArrow.localScale.x;
         Vector2 originalSize = realArrow.GetComponent<SpriteRenderer>().size;
         originalSize.x = dis;
         realArrow.GetComponent<SpriteRenderer>().size = originalSize;
     }
 
+    public void SetToRed(bool isRed)
+    {
+        if (isRed)
+            realArrow.GetComponent<SpriteRenderer>().sprite = redArrow;
+        else
+            realArrow.GetComponent<SpriteRenderer>().sprite = blackArrow;
+    }
 
     /*
     // follow the mouse
