@@ -5,13 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        Application.targetFrameRate = 60;   // fix 60hz
         LoadMap();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         
     }
@@ -37,7 +38,7 @@ public class GameManager : MonoBehaviour
                         continue;
                     Route tmpr = new Route();
                     tmpr.destination = GameObject.Find(words[0]).GetComponent<Node>();
-                    tmpr.distance = int.Parse(words[1]);
+                    tmpr.distance = float.Parse(words[1]);
                     tmpr.routeType = (RouteType)int.Parse(words[2]);
                     tmpr.beauty = float.Parse(words[3]);
                     n.routes.Add(tmpr);

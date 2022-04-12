@@ -33,7 +33,7 @@ public class NodeEditor : Editor
                 DeleteRoute(i);
             GUILayout.EndHorizontal();
             r.destination = EditorGUILayout.ObjectField("Destination", r.destination, typeof(Node), true) as Node;
-            r.distance = EditorGUILayout.IntField("Distance (km)", r.distance);
+            r.distance = EditorGUILayout.FloatField("Distance (km)", r.distance);
             r.routeType = (RouteType)EditorGUILayout.EnumPopup("Road type", r.routeType);
             r.beauty = EditorGUILayout.FloatField("Road beauty", r.beauty);
         }

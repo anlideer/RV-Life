@@ -16,6 +16,22 @@ public class HeaderUI : MonoBehaviour
     public GameObject fuel;
     public GameObject battery;
 
+    [Header("Left icons percentage display")]
+    public GameObject percentageGroup;
+    public Text healthText;
+    public Text energyText;
+    public Text fuelText;
+    public Text batteryText;
+
+    [Header("Panel")]
+    public GameObject settingPanel;
+
+
+    private void Start()
+    {
+        settingPanel.SetActive(false);
+    }
+
     private void Update()
     {
         moneyText.text = GlobalStates.currentMoney.GetStringShown();
@@ -25,5 +41,25 @@ public class HeaderUI : MonoBehaviour
         energy.fillAmount = GlobalStates.currentEnergy;
         fuel.GetComponent<PercentDisplay>().SetAmount(GlobalStates.currentFuel);
         battery.GetComponent<PercentDisplay>().SetAmount(GlobalStates.currentBattery);
+
+        // percentage
+        if (PlayerPrefs.GetInt("ShowPercentage", 1) == 1)
+        {
+            percentageGroup.SetActive(true);
+            healthText.text = string.Format("{0}%", (int)(GlobalStates.currentHealth * 100));
+            energyText.text = string.Format("{0}%", (int)(GlobalStates.currentEnergy * 100));
+            fuelText.text = string.Format("{0}%", (int)(GlobalStates.currentFuel * 100));
+            batteryText.text = string.Format("{0}%", (int)(GlobalStates.currentBattery * 100));
+        }
+        else
+        {
+            percentageGroup.SetActive(false);
+        }
+        
+    }
+
+    public void OpenSettingPanel()
+    {
+        settingPanel.SetActive(true);
     }
 }

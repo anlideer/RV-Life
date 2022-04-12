@@ -7,6 +7,7 @@ public class MyTime
     public int day;
     public int hour;
     public int minute;
+    private float minuteToBeAdded = 0;
 
     public MyTime(int d, int h, int m)
     {
@@ -29,6 +30,16 @@ public class MyTime
         {
             day += hour / 24;
             hour = hour % 24;
+        }
+    }
+
+    public void TimePassLittle(float m)
+    {
+        minuteToBeAdded += m;
+        if (minuteToBeAdded >= 1f)
+        {
+            TimePass(new MyTime(0, 0, (int)(minuteToBeAdded)));
+            minuteToBeAdded -= (int)(minuteToBeAdded);
         }
     }
 

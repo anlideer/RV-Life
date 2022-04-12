@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class VanUI : MonoBehaviour
 {
@@ -61,6 +63,12 @@ public class VanUI : MonoBehaviour
     {
         waterPanel.SetActive(false);
         // TODO: maintain, check the water system
+    }
+
+    // back to map
+    public void BackToMap()
+    {
+        SceneManager.LoadScene("Map");
     }
 
 }

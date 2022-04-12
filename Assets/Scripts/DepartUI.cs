@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DepartUI : MonoBehaviour
 {
@@ -10,28 +11,78 @@ public class DepartUI : MonoBehaviour
     public Text distanceText;
     public Text typeText;
     public Text beautyText;
-    public Text buttonText;
     public TriponMap map;
+    public GameObject departBtn;
+    public GameObject stopBtn;
+    public GameObject backToVanBtn;
     [Header("Prefabs")]
     public Text popUpText;
 
     private Route route;
     private Transform canvas;
+    private bool isMoving = false;
 
     private void Start()
     {
+        isMoving = false;
         canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
+        ShowUnselected();
+        departBtn.SetActive(true);
+        stopBtn.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (isMoving)
+        {
+            ShowUpdatingInfo();
+        }
+    }
+
+
+    public void SetMovingStatus(bool m)
+    {
+        isMoving = m;
+        // is moving
+        if (m)
+        {
+            stopBtn.SetActive(true);
+            departBtn.SetActive(false);
+            backToVanBtn.SetActive(false);
+        }
+        // stop
+        else
+        {
+            // stop at a city
+            if (GlobalStates.currentLocation.route == null)
+            {
+                departBtn.SetActive(true);
+                stopBtn.SetActive(false);
+                ShowUnselected();
+                backToVanBtn.SetActive(true);
+            }
+        }
+    }
+
+    private void ShowUnselected()
+    {
         destinationText.text = string.Format("Destination: unselected");
         distanceText.text = string.Format("Distance: ");
         typeText.text = string.Format("Road type: ");
         beautyText.text = string.Format("Road scenario: ");
     }
 
+    private void ShowUpdatingInfo()
+    {
+        int remainedDis = (int)(GlobalStates.currentLocation.route.distance - GlobalStates.currentLocation.distanceFromStart);
+        distanceText.text = string.Format("Distance remained: {0}km", remainedDis);
+    }
+
     public void SelectDestination(Route r)
     {
         route = r;
         destinationText.text = string.Format("Destination: {0}", r.destination.cityName);
-        distanceText.text = string.Format("Distance: {0}km", r.distance);
+        distanceText.text = string.Format("Distance: {0}km", (int)r.distance);
         typeText.text = string.Format("Road type: {0}", r.GetRouteTypeString());
         beautyText.text = string.Format("Road scenario: {0}", r.GetBeautyString());
     }
@@ -51,4 +102,20 @@ public class DepartUI : MonoBehaviour
         }
     }
 
+    // stop at the next service station
+    public void StopAtStation()
+    {
+        int tmp = map.StopAtNextStation();
+        Text popUp = Instantiate(popUpText, canvas);
+        popUp.text = string.Format("Will stop at the next available gas station ({0}km)", tmp);
+        Destroy(popUp.gameObject, 2f);
+        stopBtn.SetActive(false); // can't press again before arrival at station
+    }
+
+
+    // back to van page
+    public void BackToVan()
+    {
+        SceneManager.LoadScene("RV");
+    }
 }

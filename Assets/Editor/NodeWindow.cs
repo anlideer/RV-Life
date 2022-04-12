@@ -55,7 +55,7 @@ public class NodeWindow : EditorWindow
                             continue;
                         Route tmpr = new Route();
                         tmpr.destination = GameObject.Find(words[0]).GetComponent<Node>();
-                        tmpr.distance = int.Parse(words[1]);
+                        tmpr.distance = float.Parse(words[1]);
                         tmpr.routeType = (RouteType)int.Parse(words[2]);
                         tmpr.beauty = float.Parse(words[3]);
                         n.routes.Add(tmpr);

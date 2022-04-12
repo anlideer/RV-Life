@@ -77,6 +77,19 @@ public class MapController : MonoBehaviour
         cam.orthographicSize = zoomInLimit;
     }
 
+    // delete all arrows and show new arrows
+    public void ShowNewCurrent()
+    {
+        currentNode = nodeDic[GlobalStates.currentLocation.cityName];
+        selectedDes = null;
+        foreach(var a in arrows.Values)
+        {
+            Destroy(a);
+        }
+        arrows.Clear();
+        ShowRoutesFromCurrent();
+    }
+
     // delete all arrows except chosen one
     public void DeleteArrows()
     {

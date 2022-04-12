@@ -12,7 +12,7 @@ public class MyLocation
     public string cityName;
     public LocationDetail detail;
     public Route route;  // can be empty, only fill when LocationDetail.ROAD or SERVICE
-    public int distanceFromStart;
+    public float distanceFromStart;
 
     private Dictionary<LocationDetail, string> detailStrings = new Dictionary<LocationDetail, string>
     {
@@ -60,10 +60,19 @@ public class MyLocation
         return s;
     }
 
-    public bool MoveAlongRoute(int d)
+    public bool MoveAlongRoute(float d)
     {
+        // consume energy and fuel
+        float energyCell = 0.004f;
+        float fuelCell = 0.002f;
+        GlobalStates.Driving(energyCell * d, fuelCell * d);
+
+        // consume time
+        GlobalStates.currentTime.TimePassLittle(0.65f * d);
+
+        // add
         distanceFromStart += d;
-        int dis = route.distance;
+        float dis = route.distance;
         if (distanceFromStart > dis)
         {
             distanceFromStart = dis;

@@ -28,9 +28,9 @@ public class Node : MonoBehaviour
     {
         if (textInstance == null)
         {
-            Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
+            Transform mapLayer = GameObject.FindGameObjectWithTag("MapUILayer").transform;
             GameObject cityNameText = Resources.Load("CityNameText") as GameObject;
-            GameObject instance = Instantiate(cityNameText, canvas);
+            GameObject instance = Instantiate(cityNameText, mapLayer);
             textInstance = instance;
             Text instanceText = instance.GetComponent<Text>();
             instanceText.text = cityName;
