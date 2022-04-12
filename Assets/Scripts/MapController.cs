@@ -29,10 +29,13 @@ public class MapController : MonoBehaviour
     private Vector3 mousePos;
     private Dictionary<string, GameObject> arrows = new Dictionary<string, GameObject>();
     private GameObject selectedDes;
+
+    private bool mapLocked = false;
     
 
     private void Start()
     {
+        mapLocked = false;
         // get nodes
         cam = Camera.main;
         GameObject[] nodes = GameObject.FindGameObjectsWithTag("Node");
@@ -49,10 +52,41 @@ public class MapController : MonoBehaviour
 
     private void Update()
     {
+        if (mapLocked)
+            return;
+
         DetectZoom();
         DetectDrag();
         if (isDragging)
             DragByMouse();
+    }
+
+    // lock map
+    public void LockMap(bool islocked)
+    {
+        mapLocked = islocked;
+        isDragging = false;
+    }
+
+    // focus
+    public void FocusCurrent()
+    {
+        Vector3 pos = currentNode.transform.position;
+        pos.z = cam.transform.position.z;
+        cam.transform.position = pos;
+        cam.orthographicSize = zoomInLimit;
+    }
+
+    // delete all arrows except chosen one
+    public void DeleteArrows()
+    {
+        foreach(string key in arrows.Keys)
+        {
+            if (key != selectedDes.name)
+            {
+                Destroy(arrows[key]);
+            }    
+        }
     }
 
     private void PlacePin()
@@ -60,10 +94,11 @@ public class MapController : MonoBehaviour
         string location = GlobalStates.currentLocation.cityName;
         if (nodeDic.ContainsKey(location))
         {
-
             currentNode = nodeDic[location];
-            pin.transform.position = nodeDic[location].transform.position;
+            var calculator = new PinLocationCalculator(GlobalStates.currentLocation, nodeDic);
+            pin.transform.position = calculator.Calculate();
         }
+
     }
 
     private void ZoomIntoCurrent()
@@ -189,7 +224,6 @@ public class MapController : MonoBehaviour
         RaycastHit2D[] hitObjs = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         foreach (var hit in hitObjs)
         {
-            Debug.Log(hit.collider.name);
             if (hit.collider.tag == "Node")
             {
                 if (arrows.ContainsKey(hit.collider.name))

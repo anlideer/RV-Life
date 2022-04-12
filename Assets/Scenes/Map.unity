@@ -785,6 +785,7 @@ GameObject:
   - component: {fileID: 393802606}
   - component: {fileID: 393802605}
   - component: {fileID: 393802607}
+  - component: {fileID: 393802608}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -882,6 +883,21 @@ MonoBehaviour:
   zoomOutLimit: 5
   zoomInterval: 0.2
   departUI: {fileID: 1477018372}
+--- !u!114 &393802608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393802604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3ccbd09ca0d102498c72e7cc9d5132a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pin: {fileID: 1693789403}
+  departUI: {fileID: 1477018372}
+  moveDis: 500
 --- !u!1 &447089574
 GameObject:
   m_ObjectHideFlags: 0
@@ -3025,6 +3041,9 @@ MonoBehaviour:
   distanceText: {fileID: 2131247364}
   typeText: {fileID: 1261107129}
   beautyText: {fileID: 1655851947}
+  buttonText: {fileID: 1178384825}
+  map: {fileID: 393802608}
+  popUpText: {fileID: 8260187700166437269, guid: 8798d5ac834abf14a9b095849b7422fb, type: 3}
 --- !u!1 &1655851945
 GameObject:
   m_ObjectHideFlags: 0
@@ -3247,7 +3266,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1883943247}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1477018372}
+        m_TargetAssemblyTypeName: DepartUI, Assembly-CSharp
+        m_MethodName: Depart
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1883943247
 MonoBehaviour:
   m_ObjectHideFlags: 0

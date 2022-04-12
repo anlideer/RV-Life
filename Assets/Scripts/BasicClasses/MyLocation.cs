@@ -11,7 +11,8 @@ public class MyLocation
 {
     public string cityName;
     public LocationDetail detail;
-    public string destination;  // can be empty, only fill when LocationDetail.ROAD or SERVICE
+    public Route route;  // can be empty, only fill when LocationDetail.ROAD or SERVICE
+    public int distanceFromStart;
 
     private Dictionary<LocationDetail, string> detailStrings = new Dictionary<LocationDetail, string>
     {
@@ -22,25 +23,52 @@ public class MyLocation
     };
 
     public MyLocation() { }
-    public MyLocation(string cname, LocationDetail det, string des="")
+    public MyLocation(string cname, LocationDetail det, Route r = null)
     {
         cityName = cname;
         detail = det;
-        destination = des;
+        route = r;
+    }
+
+    public void GoOnRoad(Route r, LocationDetail det=LocationDetail.ROAD)
+    {
+        route = r;
+        distanceFromStart = 0;
+        detail = det;
+    }
+
+    public void Arrive(LocationDetail det = LocationDetail.PARKING)
+    {
+        cityName = route.destination.cityName;
+        detail = det;
+        route = null;
+        distanceFromStart = 0;
     }
     
     public string GetLocationString()
     {
         string s = "";
-        if (destination != "")
+        if (route != null)
         {
-            s = string.Format("{0} -> {1}", cityName, destination);
+            s = string.Format("{0}->{1}", cityName, route.destination.cityName);
         }
         else
         {
             s = cityName;
         }
-        s += string.Format(" {0}", detailStrings[detail]);
+        s += string.Format(" -{0}", detailStrings[detail]);
         return s;
+    }
+
+    public bool MoveAlongRoute(int d)
+    {
+        distanceFromStart += d;
+        int dis = route.distance;
+        if (distanceFromStart > dis)
+        {
+            distanceFromStart = dis;
+            return false;
+        }
+        return true;
     }
 }
