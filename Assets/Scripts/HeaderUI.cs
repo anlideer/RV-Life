@@ -13,6 +13,8 @@ public class HeaderUI : MonoBehaviour
     [Header("Left icons")]
     public Image health;
     public Image energy;
+    public GameObject fuel;
+    public GameObject battery;
 
     private void Update()
     {
@@ -21,5 +23,7 @@ public class HeaderUI : MonoBehaviour
         locationText.text = GlobalStates.currentLocation.GetLocationString();
         health.fillAmount = GlobalStates.currentHealth;
         energy.fillAmount = GlobalStates.currentEnergy;
+        fuel.GetComponent<PercentDisplay>().SetAmount(GlobalStates.currentFuel);
+        battery.GetComponent<PercentDisplay>().SetAmount(GlobalStates.currentBattery);
     }
 }
