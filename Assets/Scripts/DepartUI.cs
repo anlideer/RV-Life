@@ -112,9 +112,12 @@ public class DepartUI : MonoBehaviour
     public void StopAtStation()
     {
         int tmp = map.StopAtNextStation();
+        /*
         Text popUp = Instantiate(popUpText, canvas);
         popUp.text = string.Format("Will stop at the next available gas station ({0}km)", tmp);
         Destroy(popUp.gameObject, 2f);
+        */
+        MyDialogManager.Show(string.Format("Will stop at the next available gas station ({0}km)", tmp));
         stopBtn.SetActive(false); // can't press again before arrival at station
     }
 

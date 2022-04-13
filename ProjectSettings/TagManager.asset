@@ -8,6 +8,7 @@ TagManager:
   - Node
   - Arrow
   - MapUILayer
+  - Dialog
   layers:
   - Default
   - TransparentFX

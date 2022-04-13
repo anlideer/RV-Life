@@ -15,6 +15,7 @@ public class HeaderUI : MonoBehaviour
     public Image energy;
     public GameObject fuel;
     public GameObject battery;
+    public Image clean;
 
     [Header("Left icons percentage display")]
     public GameObject percentageGroup;
@@ -22,6 +23,7 @@ public class HeaderUI : MonoBehaviour
     public Text energyText;
     public Text fuelText;
     public Text batteryText;
+    public Text cleanText;
 
     [Header("Panel")]
     public GameObject settingPanel;
@@ -39,6 +41,7 @@ public class HeaderUI : MonoBehaviour
         locationText.text = GlobalStates.currentLocation.GetLocationString();
         health.fillAmount = GlobalStates.currentHealth;
         energy.fillAmount = GlobalStates.currentEnergy;
+        clean.fillAmount = GlobalStates.currentClean;
         fuel.GetComponent<PercentDisplay>().SetAmount(GlobalStates.currentFuel);
         battery.GetComponent<PercentDisplay>().SetAmount(GlobalStates.currentBattery);
 
@@ -50,6 +53,7 @@ public class HeaderUI : MonoBehaviour
             energyText.text = string.Format("{0}%", (int)(GlobalStates.currentEnergy * 100));
             fuelText.text = string.Format("{0}%", (int)(GlobalStates.currentFuel * 100));
             batteryText.text = string.Format("{0}%", (int)(GlobalStates.currentBattery * 100));
+            cleanText.text = string.Format("{0}%", (int)(GlobalStates.currentClean * 100));
         }
         else
         {

@@ -8,8 +8,9 @@ public class GasStationPanel : MonoBehaviour
     //[Header("Objects")]
 
     [Header("Settings")]
-    public float fuelPrice = 8.6f;  // 0.01fuel->8.6yuan
+    public float fuelPrice = 5.6f;  // 0.01fuel->5.6yuan
     public float foodPrice = 20f;
+    public float showerPrice = 10f;
 
     [Header("Prefabs")]
     public GameObject refuelPic;
@@ -22,28 +23,65 @@ public class GasStationPanel : MonoBehaviour
         canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
     }
 
-    // TODO: check affordable
 
     // refuel
     public void RefuelAll()
     {
         float amount = 1f - GlobalStates.currentFuel;
-        GlobalStates.currentMoney.Spend(fuelPrice * amount * 100);
-        GlobalStates.currentFuel = 1f;
-        GlobalStates.currentTime.TimePass(new MyTime(0, 0, 20));
-        // show pic
-        GameObject obj = Instantiate(refuelPic, canvas);
-        Destroy(obj, 3f);
+        float cost = fuelPrice * amount * 100;
+        // check affordable
+        if (GlobalStates.currentMoney.Affordable(cost))
+        {
+            GlobalStates.currentMoney.Spend(cost);
+            GlobalStates.currentFuel = 1f;
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 20));
+            // show pic
+            GameObject obj = Instantiate(refuelPic, canvas);
+            Destroy(obj, 3f);
+            MyDialogManager.Show(string.Format("Cost ¥{0}.", (int)cost));
+        }
+        else
+        {
+            MyDialogManager.Show(string.Format("It will cost ¥{0}. You don't have enough money", (int)cost));
+        }
+
+
     }
 
     // buy food and eat
     public void Eat()
     {
-        GlobalStates.currentHealth = 1f;
-        GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
-        GlobalStates.currentMoney.Spend(foodPrice);
-        Text t = Instantiate(popUpText, canvas).GetComponent<Text>();
-        t.text = "Eating...(cost 20)";
-        Destroy(t.gameObject, 2f);
+        if (GlobalStates.currentMoney.Affordable(foodPrice))
+        {
+            GlobalStates.currentHealth = 1f;
+            GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
+            GlobalStates.currentMoney.Spend(foodPrice);
+            MyDialogManager.Show(string.Format("Eating/speed:down/....../speed:init/ Cost ¥{0}.", (int)foodPrice));
+        }
+        else
+        {
+            MyDialogManager.Show(string.Format("It will cost ¥{0}. You don't have enough money.", (int)foodPrice));
+        }
+
+
+    }
+
+    // shower
+    public void TakeShower()
+    {
+        if (GlobalStates.currentMoney.Affordable(showerPrice))
+        {
+            // GlobalStates.currentEnergy +
+            GlobalStates.currentClean = 1f;
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
+            GlobalStates.currentMoney.Spend(10f);
+            MyDialogManager.Show(string.Format("Showering/speed:down/....../speed:init/ Cost ¥{0}.", (int)showerPrice));
+        }
+        else
+        {
+            MyDialogManager.Show(string.Format("It will cost ¥{0}. You don't have enough money.", (int)showerPrice));
+        }
+
+
     }
 }

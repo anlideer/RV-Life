@@ -35,7 +35,7 @@ public class TriponMap : MonoBehaviour
 
     private void Update()
     {
-        if (isMoving)
+        if (isMoving && !GlobalStates.isStopped)
         {
             Moving();
         }
@@ -46,6 +46,7 @@ public class TriponMap : MonoBehaviour
     {
         mapCtrl.LockMap(true);
         mapCtrl.FocusCurrent();
+        mapCtrl.DeleteArrows();
         GlobalStates.currentLocation.GoOnRoad(r);
         calculator = new PinLocationCalculator(GlobalStates.currentLocation, nodeDic);
         departUI.SetMovingStatus(true);

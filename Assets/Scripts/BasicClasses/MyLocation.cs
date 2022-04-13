@@ -75,11 +75,13 @@ public class MyLocation
 
     public bool MoveAlongRoute(float d)
     {
+        // TODO: make it like a seeting
         // consume energy and fuel
         float energyCell = 0.0008f;
         float fuelCell = 0.0015f;    
         float healthCell = 0.001f;  // starvation
-        GlobalStates.Driving(healthCell*d, energyCell * d, fuelCell * d);
+        float cleanCell = 0.0003f;
+        GlobalStates.Driving(healthCell*d, energyCell * d, fuelCell * d, cleanCell*d);
 
         // consume time
         GlobalStates.currentTime.TimePassLittle(0.65f * d);

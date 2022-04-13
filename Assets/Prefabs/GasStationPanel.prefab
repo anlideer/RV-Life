@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffcd2f0a82fac3a4ab279b7c36831caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelPrice: 8.6
+  fuelPrice: 5.6
   foodPrice: 20
   refuelPic: {fileID: 9140043772721328201, guid: 411a598c9eaff6842a3ed44a8ea53747, type: 3}
   popUpText: {fileID: 8260187700166437269, guid: 8798d5ac834abf14a9b095849b7422fb, type: 3}
@@ -795,7 +795,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8328948735058709664}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8797056134158458160}
+        m_TargetAssemblyTypeName: GasStationPanel, Assembly-CSharp
+        m_MethodName: TakeShower
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2859907634122825357
 GameObject:
   m_ObjectHideFlags: 0

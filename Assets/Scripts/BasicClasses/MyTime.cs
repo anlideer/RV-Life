@@ -31,6 +31,9 @@ public class MyTime
             day += hour / 24;
             hour = hour % 24;
         }
+
+        // TODO: when time pass, some data goes down (health, cleanness)
+
     }
 
     public void TimePassLittle(float m)

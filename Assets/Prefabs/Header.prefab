@@ -534,11 +534,13 @@ MonoBehaviour:
   energy: {fileID: 8076592832949135100}
   fuel: {fileID: 8405656939691818629}
   battery: {fileID: 7561600556850943123}
+  clean: {fileID: 631803558583811634}
   percentageGroup: {fileID: 8418857183116513228}
   healthText: {fileID: 461047260200377871}
   energyText: {fileID: 1412192062986589779}
   fuelText: {fileID: 3768308966278560346}
   batteryText: {fileID: 2694905121129920694}
+  cleanText: {fileID: 294641632744091594}
   settingPanel: {fileID: 121995547688157080}
 --- !u!1 &785366232101151528
 GameObject:
@@ -1970,7 +1972,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 9cd81d6ae2ab19344b68b675a75abe9b, type: 3}
     - target: {fileID: 8859702032779460176, guid: 32a3e3799322c0b44856fd8a575dbbb0, type: 3}
       propertyPath: m_FillAmount
-      value: 1
+      value: 0.661
       objectReference: {fileID: 0}
     - target: {fileID: 8859702032779460177, guid: 32a3e3799322c0b44856fd8a575dbbb0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2091,3 +2093,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8859702032972751496, guid: 32a3e3799322c0b44856fd8a575dbbb0, type: 3}
   m_PrefabInstance: {fileID: 8230154544283582562}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &631803558583811634 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8859702032779460176, guid: 32a3e3799322c0b44856fd8a575dbbb0, type: 3}
+  m_PrefabInstance: {fileID: 8230154544283582562}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
