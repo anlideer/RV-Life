@@ -98,6 +98,8 @@ public class MapController : MonoBehaviour
     // delete all arrows except chosen one
     public void DeleteArrows()
     {
+        if (selectedDes == null)
+            return;
         foreach(string key in arrows.Keys)
         {
             if (key != selectedDes.name)

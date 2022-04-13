@@ -47,4 +47,23 @@ public class MyDialogManager : MonoBehaviour
     {
         GlobalStates.isStopped = isStop;
     }
+
+    // sleep option dialog
+    public static void SleepDialog()
+    {
+        DialogData d1 = new DialogData("How long do you want to sleep/rest?");
+        d1.SelectList.Add("1h", "1 hour");
+        d1.SelectList.Add("8h", "8 hours");
+        d1.SelectList.Add("8am", "Until tomorrow 8am");
+        d1.SelectList.Add("full", "Until energy becomes full");
+        d1.SelectList.Add("no", "No, I don't want to sleep");
+        d1.Callback = () => SleepCallback();
+        // TODO: call manager show...
+    }
+
+    // callback for sleep
+    public static void SleepCallback()
+    {
+        
+    }
 }

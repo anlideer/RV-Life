@@ -79,8 +79,8 @@ public class MyLocation
         // consume energy and fuel
         float energyCell = 0.0008f;
         float fuelCell = 0.0015f;    
-        float healthCell = 0.001f;  // starvation
-        float cleanCell = 0.0003f;
+        float healthCell = 0.0003f;  // starvation
+        float cleanCell = 0.0000375f;
         GlobalStates.Driving(healthCell*d, energyCell * d, fuelCell * d, cleanCell*d);
 
         // consume time

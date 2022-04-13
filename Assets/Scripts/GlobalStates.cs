@@ -57,13 +57,57 @@ public class GlobalStates: MonoBehaviour
     // driving decrease energy and fuel
     public static void Driving(float health_consumed, float energy_consumed, float fuel_consumed, float clean_consumed)
     {
-        currentHealth -= health_consumed;
-        currentEnergy -= energy_consumed;
-        currentFuel -= fuel_consumed;
-        currentClean -= clean_consumed;
-        if (currentEnergy < 0f)
+        ChangeHealth(-health_consumed);
+        ChangeEnergy(-energy_consumed);
+        ChangeFuel(-fuel_consumed);
+        ChangeClean(-clean_consumed);
+
+        CheckConditions();
+    }
+
+    public static void ChangeHealth(float change)
+    {
+        currentHealth += change;
+        if (currentHealth > 1f)
+            currentHealth = 1f;
+        else if (currentHealth < 0f)
+            currentHealth = 0f;
+    }
+
+    public static void ChangeEnergy(float change)
+    {
+        currentEnergy += change;
+        if (currentEnergy > 1f)
+            currentEnergy = 1f;
+        else if (currentEnergy < 0f)
             currentEnergy = 0f;
-        if (currentFuel < 0f)
+    }
+
+    public static void ChangeFuel(float change)
+    {
+        currentFuel += change;
+        if (currentFuel > 1f)
+            currentFuel = 1f;
+        else if (currentFuel < 0f)
             currentFuel = 0f;
     }
+
+    public static void ChangeBattery(float change)
+    {
+        currentBattery += change;
+        if (currentBattery > 1f)
+            currentBattery = 1f;
+        else if (currentBattery < 0f)
+            currentBattery = 0f;
+    }
+
+    public static void ChangeClean(float change)
+    {
+        currentClean += change;
+        if (currentClean > 1f)
+            currentClean = 1f;
+        else if (currentClean < 0f)
+            currentClean = 0f;
+    }
+
 }

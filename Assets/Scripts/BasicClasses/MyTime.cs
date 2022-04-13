@@ -32,8 +32,8 @@ public class MyTime
             hour = hour % 24;
         }
 
-        // TODO: when time pass, some data goes down (health, cleanness)
-
+        TimePassPenalty(t);
+        
     }
 
     public void TimePassLittle(float m)
@@ -50,5 +50,15 @@ public class MyTime
     {
         string s = string.Format("Day {0}\n{1}:{2:2}", day, hour.ToString("00"), minute.ToString("00"));
         return s;
+    }
+
+    // when time pass, some data goes down (health, cleanness)
+    private void TimePassPenalty(MyTime t)
+    {
+        int tmpMinutes = t.minute;
+        tmpMinutes += 60 * t.hour;
+        tmpMinutes += 24 * 60 * t.day;
+        GlobalStates.ChangeHealth(-0.0012f * tmpMinutes);
+        GlobalStates.ChangeClean(-0.00035f * tmpMinutes);
     }
 }

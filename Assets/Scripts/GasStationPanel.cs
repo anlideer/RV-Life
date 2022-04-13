@@ -11,6 +11,8 @@ public class GasStationPanel : MonoBehaviour
     public float fuelPrice = 5.6f;  // 0.01fuel->5.6yuan
     public float foodPrice = 20f;
     public float showerPrice = 10f;
+    public float foodAmount = 0.5f;
+    public float showerEnergyAmount = 0.1f;
 
     [Header("Prefabs")]
     public GameObject refuelPic;
@@ -53,7 +55,7 @@ public class GasStationPanel : MonoBehaviour
     {
         if (GlobalStates.currentMoney.Affordable(foodPrice))
         {
-            GlobalStates.currentHealth = 1f;
+            GlobalStates.ChangeHealth(foodAmount);
             GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
             GlobalStates.currentMoney.Spend(foodPrice);
             MyDialogManager.Show(string.Format("Eating/speed:down/....../speed:init/ Cost ¥{0}.", (int)foodPrice));
@@ -71,7 +73,7 @@ public class GasStationPanel : MonoBehaviour
     {
         if (GlobalStates.currentMoney.Affordable(showerPrice))
         {
-            // GlobalStates.currentEnergy +
+            GlobalStates.ChangeEnergy(showerEnergyAmount);
             GlobalStates.currentClean = 1f;
             GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
             GlobalStates.currentMoney.Spend(10f);
