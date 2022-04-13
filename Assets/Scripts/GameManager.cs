@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         Application.targetFrameRate = 60;   // fix 60hz
         LoadMap();

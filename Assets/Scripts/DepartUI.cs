@@ -26,9 +26,7 @@ public class DepartUI : MonoBehaviour
     {
         isMoving = false;
         canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
-        ShowUnselected();
-        departBtn.SetActive(true);
-        stopBtn.SetActive(false);
+        ShowInitial();
     }
 
     private void Update()
@@ -53,23 +51,31 @@ public class DepartUI : MonoBehaviour
         // stop
         else
         {
-            // stop at a city
-            if (GlobalStates.currentLocation.route == null)
-            {
-                departBtn.SetActive(true);
-                stopBtn.SetActive(false);
-                ShowUnselected();
-                backToVanBtn.SetActive(true);
-            }
+            ShowInitial();
         }
     }
 
-    private void ShowUnselected()
+    private void ShowInitial()
     {
-        destinationText.text = string.Format("Destination: unselected");
-        distanceText.text = string.Format("Distance: ");
-        typeText.text = string.Format("Road type: ");
-        beautyText.text = string.Format("Road scenario: ");
+        // in city
+        if (GlobalStates.currentLocation.route == null)
+        {
+            destinationText.text = string.Format("Destination: unselected");
+            distanceText.text = string.Format("Distance: ");
+            typeText.text = string.Format("Road type: ");
+            beautyText.text = string.Format("Road scenario: ");
+        }
+        // on the road
+        else
+        {
+            SelectDestination(GlobalStates.currentLocation.route);
+            ShowUpdatingInfo();
+        }
+
+
+        departBtn.SetActive(true);
+        stopBtn.SetActive(false);
+        backToVanBtn.SetActive(true);
     }
 
     private void ShowUpdatingInfo()

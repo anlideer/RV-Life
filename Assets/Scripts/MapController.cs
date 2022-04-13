@@ -33,7 +33,7 @@ public class MapController : MonoBehaviour
     private bool mapLocked = false;
     
 
-    private void Start()
+    private void Awake()
     {
         mapLocked = false;
         // get nodes
@@ -43,7 +43,12 @@ public class MapController : MonoBehaviour
         {
             nodeDic[node.name] = node;
         }
+        currentNode = nodeDic[GlobalStates.currentLocation.cityName];
+    }
 
+    private void OnEnable()
+    {
+        currentNode = nodeDic[GlobalStates.currentLocation.cityName];
         PlacePin();
         ZoomIntoCurrent();
         camPos = cam.transform.position;
@@ -217,15 +222,27 @@ public class MapController : MonoBehaviour
     // show every route from current node
     private void ShowRoutesFromCurrent()
     {
-        List<Route> routes = currentNode.GetComponent<Node>().routes;
-        foreach (var route in routes)
+        if (GlobalStates.currentLocation.route == null)
         {
-            Node n = route.destination;
-            if (nodeDic.ContainsKey(n.cityName))
+            currentNode = nodeDic[GlobalStates.currentLocation.cityName];
+            List<Route> routes = currentNode.GetComponent<Node>().routes;
+            foreach (var route in routes)
             {
-                GameObject obj = CreateArrow(currentNode.transform, nodeDic[n.cityName].transform);
-                arrows[n.cityName] = obj;
+                Node n = route.destination;
+                if (nodeDic.ContainsKey(n.cityName))
+                {
+                    GameObject obj = CreateArrow(currentNode.transform, nodeDic[n.cityName].transform);
+                    arrows[n.cityName] = obj;
+                }
             }
+        }
+        else
+        {
+            var route = GlobalStates.currentLocation.route;
+            currentNode = nodeDic[GlobalStates.currentLocation.cityName];
+            GameObject obj = CreateArrow(currentNode.transform, nodeDic[route.destination.cityName].transform);
+            obj.GetComponent<ArrowCtrl>().SetToRed(true);
+            arrows[route.destination.cityName] = obj;
         }
 
     }

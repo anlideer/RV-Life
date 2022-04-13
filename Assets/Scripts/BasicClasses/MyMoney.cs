@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class MyMoney
 {
-    public int money;
+    public float money;
 
-    public MyMoney(int m)
+    public MyMoney(float m)
     {
         money = m;
     }
 
-    public void Earn(int m)
+    public void Earn(float m)
     {
         money += m;
     }
 
-    public void Spend(int m)
+    public void Spend(float m)
     {
         money -= m;
     }
 
-    public bool Affordable(int m)
+    public bool Affordable(float m)
     {
         if (money >= m)
             return true;
@@ -31,6 +31,6 @@ public class MyMoney
 
     public string GetStringShown()
     {
-        return string.Format("¥{0}", money);
+        return string.Format("¥{0}", (int)money);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GlobalStates: MonoBehaviour
 {
     public static MyTime currentTime = new MyTime(1, 8, 0);
-    public static MyMoney currentMoney = new MyMoney(6000);
+    public static MyMoney currentMoney = new MyMoney(6000f);
     public static MyLocation currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
     public static float currentHealth = 1f; // 0-1f
     public static float currentEnergy = 1f; // 0-1f
@@ -15,27 +15,27 @@ public class GlobalStates: MonoBehaviour
     public static string CheckConditions()
     {
         string res = "";
-        if (currentHealth <= 0)
+        if (currentHealth <= 0f)
         {
-            currentHealth = 0;
+            currentHealth = 0f;
             res += "Your health goes to zero.\n";
         }
 
-        if (currentEnergy <= 0)
+        if (currentEnergy <= 0f)
         {
-            currentEnergy = 0;
+            currentEnergy = 0f;
             res += "Your energy goes to zero.\n";
         }
 
-        if (currentFuel <= 0)
+        if (currentFuel <= 0f)
         {
-            currentFuel = 0;
+            currentFuel = 0f;
             res += "Your van is out of fuel.\n";
         }
 
-        if (currentBattery <= 0)
+        if (currentBattery <= 0f)
         {
-            currentBattery = 0;
+            currentBattery = 0f;
             res += "Your van is out of electricity.\n";
         }
 
@@ -44,13 +44,14 @@ public class GlobalStates: MonoBehaviour
     }
 
     // driving decrease energy and fuel
-    public static void Driving(float energy_consumed, float fuel_consumed)
+    public static void Driving(float health_consumed, float energy_consumed, float fuel_consumed)
     {
+        currentHealth -= health_consumed;
         currentEnergy -= energy_consumed;
         currentFuel -= fuel_consumed;
-        if (currentEnergy < 0)
-            currentEnergy = 0;
-        if (currentFuel < 0)
-            currentFuel = 0;
+        if (currentEnergy < 0f)
+            currentEnergy = 0f;
+        if (currentFuel < 0f)
+            currentFuel = 0f;
     }
 }

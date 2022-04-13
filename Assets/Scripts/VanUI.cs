@@ -10,6 +10,7 @@ public class VanUI : MonoBehaviour
     public float destroyDuration = 3f;
     public GameObject waterPanel;
     public Text popUpPrefab;
+    public GameObject gasPanel;
 
     private Transform canvas;
 
@@ -17,6 +18,14 @@ public class VanUI : MonoBehaviour
     {
         canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
         waterPanel.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        if (GlobalStates.currentLocation.detail == LocationDetail.SERVICE)
+            gasPanel.SetActive(true);
+        else
+            gasPanel.SetActive(false);
     }
 
     public void OpenWaterPanel()

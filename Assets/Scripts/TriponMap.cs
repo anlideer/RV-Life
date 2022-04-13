@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TriponMap : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class TriponMap : MonoBehaviour
 
     private bool isMoving = false;
     private PinLocationCalculator calculator;
-    private int disToGas;
+    private float disToGas;
     private bool goToGas = false;
 
     private void Start()
@@ -49,6 +50,7 @@ public class TriponMap : MonoBehaviour
         calculator = new PinLocationCalculator(GlobalStates.currentLocation, nodeDic);
         departUI.SetMovingStatus(true);
         isMoving = true;
+        goToGas = false;
     }
 
 
@@ -68,17 +70,30 @@ public class TriponMap : MonoBehaviour
             mapCtrl.ShowNewCurrent();
             departUI.SetMovingStatus(false);
         }
-
+        else if (goToGas)
+        {
+            disToGas -= moveDis * Time.deltaTime;
+            // arrive at the gas station
+            if (disToGas <= 0)
+            {
+                disToGas = 0f;
+                isMoving = false;
+                goToGas = false;
+                mapCtrl.LockMap(false);
+                departUI.SetMovingStatus(false);
+                GlobalStates.currentLocation.StopAtStation();
+                SceneManager.LoadScene("RV");   // load van scene
+            }
+        }
     }
 
     // stop at the next gas station
     public int StopAtNextStation()
     {
-        // produce a random int (0-10km) which is the distance to gas station
-        disToGas = Random.Range(2, 16);
+        // produce a random int (km) which is the distance to gas station
+        disToGas = Random.Range(3, 20);
         goToGas = true;
-        // TODO: half done
-        return disToGas;
+        return (int)disToGas;
     }
 
 }

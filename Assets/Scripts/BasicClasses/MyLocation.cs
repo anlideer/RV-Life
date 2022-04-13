@@ -32,9 +32,17 @@ public class MyLocation
 
     public void GoOnRoad(Route r, LocationDetail det=LocationDetail.ROAD)
     {
-        route = r;
-        distanceFromStart = 0;
-        detail = det;
+        if (GlobalStates.currentLocation.detail != LocationDetail.SERVICE)
+        {
+            route = r;
+            distanceFromStart = 0;
+            detail = det;
+        }
+        // continue journey from gas station
+        else
+        {
+            detail = det;
+        }
     }
 
     public void Arrive(LocationDetail det = LocationDetail.PARKING)
@@ -43,6 +51,11 @@ public class MyLocation
         detail = det;
         route = null;
         distanceFromStart = 0;
+    }
+
+    public void StopAtStation()
+    {
+        detail = LocationDetail.SERVICE;
     }
     
     public string GetLocationString()
@@ -63,9 +76,10 @@ public class MyLocation
     public bool MoveAlongRoute(float d)
     {
         // consume energy and fuel
-        float energyCell = 0.004f;
-        float fuelCell = 0.002f;
-        GlobalStates.Driving(energyCell * d, fuelCell * d);
+        float energyCell = 0.0008f;
+        float fuelCell = 0.0015f;    
+        float healthCell = 0.001f;  // starvation
+        GlobalStates.Driving(healthCell*d, energyCell * d, fuelCell * d);
 
         // consume time
         GlobalStates.currentTime.TimePassLittle(0.65f * d);
