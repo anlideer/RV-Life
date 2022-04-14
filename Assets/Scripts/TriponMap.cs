@@ -70,6 +70,7 @@ public class TriponMap : MonoBehaviour
             mapCtrl.LockMap(false);
             mapCtrl.ShowNewCurrent();
             departUI.SetMovingStatus(false);
+            departUI.route = null;
         }
         else if (goToGas)
         {

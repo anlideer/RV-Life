@@ -18,7 +18,7 @@ public class DepartUI : MonoBehaviour
     [Header("Prefabs")]
     public Text popUpText;
 
-    private Route route;
+    public Route route;
     private Transform canvas;
     private bool isMoving = false;
 
