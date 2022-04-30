@@ -34,9 +34,9 @@ public class GasStationPanel : MonoBehaviour
         // check affordable
         if (GlobalStates.currentMoney.Affordable(cost))
         {
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 20));
             GlobalStates.currentMoney.Spend(cost);
             GlobalStates.currentFuel = 1f;
-            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 20));
             // show pic
             GameObject obj = Instantiate(refuelPic, canvas);
             Destroy(obj, 3f);
@@ -55,8 +55,8 @@ public class GasStationPanel : MonoBehaviour
     {
         if (GlobalStates.currentMoney.Affordable(foodPrice))
         {
-            GlobalStates.ChangeHealth(foodAmount);
             GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
+            GlobalStates.ChangeHealth(foodAmount);
             GlobalStates.currentMoney.Spend(foodPrice);
             MyDialogManager.Show(string.Format("Eating/speed:down/....../speed:init/ Cost ¥{0}.", (int)foodPrice));
         }
@@ -73,9 +73,9 @@ public class GasStationPanel : MonoBehaviour
     {
         if (GlobalStates.currentMoney.Affordable(showerPrice))
         {
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
             GlobalStates.ChangeEnergy(showerEnergyAmount);
             GlobalStates.currentClean = 1f;
-            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
             GlobalStates.currentMoney.Spend(10f);
             MyDialogManager.Show(string.Format("Showering/speed:down/....../speed:init/ Cost ¥{0}.", (int)showerPrice));
         }

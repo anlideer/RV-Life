@@ -41,6 +41,7 @@ public class DepartUI : MonoBehaviour
     public void SetMovingStatus(bool m)
     {
         isMoving = m;
+        GlobalStates.isDriving = m;
         // is moving
         if (m)
         {

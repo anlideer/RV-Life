@@ -60,5 +60,17 @@ public class MyTime
         tmpMinutes += 24 * 60 * t.day;
         GlobalStates.ChangeHealth(-0.0012f * tmpMinutes);
         GlobalStates.ChangeClean(-0.00035f * tmpMinutes);
+
+        if (!GlobalStates.isSleeping)
+        {
+            VanStates.ConsumeWater(0.00006f * tmpMinutes);
+            VanStates.ProduceBlack(0.00005f * tmpMinutes);
+            VanStates.ProduceGrey(0.00005f * tmpMinutes);         
+        }
+
+        if (!GlobalStates.isDriving)
+        {
+            GlobalStates.ChangeBattery(-0.0004f * tmpMinutes);
+        }
     }
 }

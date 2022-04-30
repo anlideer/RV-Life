@@ -13,6 +13,8 @@ public class GlobalStates: MonoBehaviour
     public static float currentBattery = 1f;    // 0-1f
     public static float currentClean = 1f;  // 0-1f
     public static bool isStopped = false;
+    public static bool isDriving = false;
+    public static bool isSleeping = false;
 
     public static void CheckConditions()
     {
@@ -41,11 +43,15 @@ public class GlobalStates: MonoBehaviour
             res += "Your van is out of electricity.\n";
         }
 
+        // TODO: deal with cleanness, and van states (water system) warning and consequences.
+        // i.e. low cleanness can cause energy going down faster.
+        /*
         if (currentClean <= 0f)
         {
             currentClean = 0f;
             res += "Your cleanness goes to zero.\n";
         }
+        */
 
 
         if (res != "")
@@ -55,12 +61,13 @@ public class GlobalStates: MonoBehaviour
     }
 
     // driving decrease energy and fuel
-    public static void Driving(float health_consumed, float energy_consumed, float fuel_consumed, float clean_consumed)
+    public static void Driving(float health_consumed, float energy_consumed, float fuel_consumed, float clean_consumed, float battery_gain)
     {
         ChangeHealth(-health_consumed);
         ChangeEnergy(-energy_consumed);
         ChangeFuel(-fuel_consumed);
         ChangeClean(-clean_consumed);
+        ChangeBattery(battery_gain);
 
         CheckConditions();
     }
