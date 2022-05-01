@@ -18,29 +18,67 @@ public class GlobalStates: MonoBehaviour
 
     public static void CheckConditions()
     {
-        string res = "";
         if (currentHealth <= 0f)
         {
-            currentHealth = 0f;
-            res += "Your health goes to zero.\n";
+            List<string> res = new List<string>();
+            MyDialogManager.Show("Your health goes to zero...Spend 100 to buy food urgently.");
+
+            if (GlobalStates.currentMoney.Affordable(100))
+            {
+                GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
+                GlobalStates.currentHealth = 1f;
+                GlobalStates.currentMoney.Spend(100);
+                Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
+                GameObject obj = Instantiate(Resources.Load("FoodBag") as GameObject, canvas);
+                Destroy(obj, 3f);
+            }
+            else
+            {
+                MyDialogManager.Show(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
+                // TODO: back to main menu
+            }
         }
 
         if (currentEnergy <= 0f)
         {
             currentEnergy = 0f;
-            res += "Your energy goes to zero.\n";
+            MyDialogManager.Show("Your energy goes to zero...Stop and spend 12 hours sleeping...");
+
+            GlobalStates.currentTime.TimePass(new MyTime(0, 12, 0));
+            GlobalStates.currentEnergy = 1f;
+            Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
+            GameObject obj = Instantiate(Resources.Load("Night") as GameObject, canvas);
+            Destroy(obj, 3f);
         }
 
         if (currentFuel <= 0f)
         {
             currentFuel = 0f;
-            res += "Your van is out of fuel.\n";
+            if (GlobalStates.currentMoney.Affordable(500))
+            {
+
+                MyDialogManager.Show(new List<string> { "Your van is out of fuel...Call for help...",  "Spend 500. The van is slightly refueled." });
+                GlobalStates.currentMoney.Spend(500);
+                GlobalStates.currentTime.TimePass(new MyTime(0, 2, 0));
+                GlobalStates.ChangeFuel(0.2f);
+                Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
+                GameObject obj = Instantiate(Resources.Load("Tier") as GameObject, canvas);
+                Destroy(obj, 3f);
+            }
+            else
+            {
+                MyDialogManager.Show(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
+                // TODO: game over
+            }
         }
 
         if (currentBattery <= 0f)
         {
             currentBattery = 0f;
-            res += "Your van is out of electricity.\n";
+            MyDialogManager.Show("Your van is out of electricity. Use some fuel to get it recharged.");
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
+            GlobalStates.ChangeFuel(-0.1f);
+            GlobalStates.ChangeBattery(0.3f);
         }
 
         // TODO: deal with cleanness, and van states (water system) warning and consequences.
@@ -53,11 +91,6 @@ public class GlobalStates: MonoBehaviour
         }
         */
 
-
-        if (res != "")
-        {
-            MyDialogManager.Show(res);
-        }
     }
 
     // driving decrease energy and fuel

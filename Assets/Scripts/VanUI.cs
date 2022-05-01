@@ -20,9 +20,9 @@ public class VanUI : MonoBehaviour
 
     private void Update()
     {
-        waterText.text = string.Format("{0}%", (int)VanStates.waterTank * 100);
-        greyText.text = string.Format("{0}%", (int)VanStates.greyTank * 100);
-        blackText.text = string.Format("{0}%", (int)VanStates.blackTank * 100);
+        waterText.text = string.Format("{0}%", (int)(VanStates.waterTank * 100));
+        greyText.text = string.Format("{0}%", (int)(VanStates.greyTank * 100));
+        blackText.text = string.Format("{0}%", (int)(VanStates.blackTank * 100));
     }
 
     private void OnEnable()
@@ -79,18 +79,20 @@ public class VanUI : MonoBehaviour
         SceneManager.LoadScene("Map");
     }
 
-    // TODO: provide different options (now: 8h)
+    // provide different options
     public void Sleep()
     {
-        GlobalStates.isSleeping = true;
-        MyDialogManager.Show("Sleeping for eight hours/speed:down/....../speed:init/");
-        GlobalStates.currentTime.TimePass(new MyTime(0, 8, 0));
-        GlobalStates.currentEnergy = 1f;
-        GlobalStates.isSleeping = false;
+        MyDialogManager.SleepDialog();
     }
 
     public void Shower()
     {
+        if (VanStates.waterTank == 0f)
+        {
+            MyDialogManager.Show("No water left in water container");
+            return;
+        }
+
         MyDialogManager.Show("Showering/speed:down/.../speed:init/");
         float e = 0.1f;
         float c = 1f;

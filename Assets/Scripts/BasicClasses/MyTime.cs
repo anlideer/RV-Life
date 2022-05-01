@@ -46,6 +46,32 @@ public class MyTime
         }
     }
 
+    // return the hour pass
+    public float TimePassUntil(MyTime t)
+    {
+        int d = t.day - day;
+        int h = t.hour - hour;
+        int m = t.minute - minute;
+        if (m < 0)
+        {
+            m += 60;
+            h -= 1;
+        }
+        if (h < 0)
+        {
+            h += 24;
+            d -= 1;
+        }
+        if (d < 0)
+        {
+            Debug.LogWarning("Invalid time pass until");
+            return 0f;
+        }
+
+        TimePass(new MyTime(d, h, m));
+        return d * 24 + h + m / 60;
+    }
+
     public string GetStringShown()
     {
         string s = string.Format("Day {0}\n{1}:{2:2}", day, hour.ToString("00"), minute.ToString("00"));
@@ -58,14 +84,19 @@ public class MyTime
         int tmpMinutes = t.minute;
         tmpMinutes += 60 * t.hour;
         tmpMinutes += 24 * 60 * t.day;
-        GlobalStates.ChangeHealth(-0.0012f * tmpMinutes);
-        GlobalStates.ChangeClean(-0.00035f * tmpMinutes);
-
+        
         if (!GlobalStates.isSleeping)
         {
             VanStates.ConsumeWater(0.00006f * tmpMinutes);
             VanStates.ProduceBlack(0.00005f * tmpMinutes);
-            VanStates.ProduceGrey(0.00005f * tmpMinutes);         
+            VanStates.ProduceGrey(0.00005f * tmpMinutes);
+            GlobalStates.ChangeHealth(-0.0012f * tmpMinutes);
+            GlobalStates.ChangeClean(-0.00035f * tmpMinutes);
+        }
+        else
+        {
+            GlobalStates.ChangeHealth(-0.0008f * tmpMinutes);
+            GlobalStates.ChangeClean(-0.00025f * tmpMinutes);
         }
 
         if (!GlobalStates.isDriving)
@@ -73,4 +104,5 @@ public class MyTime
             GlobalStates.ChangeBattery(-0.0004f * tmpMinutes);
         }
     }
+
 }

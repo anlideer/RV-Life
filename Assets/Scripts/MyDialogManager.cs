@@ -51,19 +51,57 @@ public class MyDialogManager : MonoBehaviour
     // sleep option dialog
     public static void SleepDialog()
     {
-        DialogData d1 = new DialogData("How long do you want to sleep/rest?");
+        List<DialogData> dd = new List<DialogData>();
+        DialogData d1 = new DialogData("How long do you want to sleep or rest?");
         d1.SelectList.Add("1h", "1 hour");
         d1.SelectList.Add("8h", "8 hours");
         d1.SelectList.Add("8am", "Until tomorrow 8am");
-        d1.SelectList.Add("full", "Until energy becomes full");
         d1.SelectList.Add("no", "No, I don't want to sleep");
         d1.Callback = () => SleepCallback();
-        // TODO: call manager show...
+        dd.Add(d1);
+        // show
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (obj)
+            Destroy(obj);
+        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        manager.Show(dd);
     }
 
     // callback for sleep
     public static void SleepCallback()
     {
-        
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        DialogManager manager = obj.GetComponent<DialogManager>();
+
+        if (manager.Result == "1h")
+        {
+            GlobalStates.isSleeping = true;
+            Show("Resting for one hours/speed:down/.../speed:init/");
+            GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
+            GlobalStates.ChangeEnergy(0.1f);
+            GlobalStates.isSleeping = false;
+        }
+        else if (manager.Result == "8h")
+        {
+            GlobalStates.isSleeping = true;
+            Show("Sleeping for eight hours/speed:down/....../speed:init/");
+            GlobalStates.currentTime.TimePass(new MyTime(0, 8, 0));
+            GlobalStates.ChangeEnergy(1f);
+            GlobalStates.isSleeping = false;
+        }
+        else if (manager.Result == "8am")
+        {
+            GlobalStates.isSleeping = true;
+            Show("Sleeping until 8am/speed:down/....../speed:init/");
+            float hours = GlobalStates.currentTime.TimePassUntil(new MyTime(GlobalStates.currentTime.day + 1, 8, 0));
+            GlobalStates.ChangeEnergy(0.125f * hours);
+            GlobalStates.isSleeping = false;
+        }
+        else
+        {
+            Show("Cancel rest operation");
+        }
+
     }
 }
