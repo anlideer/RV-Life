@@ -15,8 +15,14 @@ public class MyDialogManager : MonoBehaviour
         DialogManager manager = dialogObj.GetComponent<DialogManager>();
 
         List<DialogData> datas = new List<DialogData>();
-        foreach (string s in plainTexts)
-            datas.Add(new DialogData(s));
+        for (int i = 0; i < plainTexts.Count; i++)
+        {
+            var tmp = new DialogData(plainTexts[i]);
+            if (i == plainTexts.Count - 1)
+                tmp.Callback = () => DialogFinished();
+            datas.Add(tmp);
+        }
+            
         manager.Show(datas);
     }
 
@@ -104,4 +110,71 @@ public class MyDialogManager : MonoBehaviour
         }
 
     }
+
+    // refuel option dialog
+    public static void RefuelDialog()
+    {
+        List<DialogData> dd = new List<DialogData>();
+        DialogData d1 = new DialogData("How much do you want to refuel?");
+        d1.SelectList.Add("0.1", "Refuel 10%");
+        d1.SelectList.Add("0.5", "Refuel 50%");
+        d1.SelectList.Add("full", "Refuel to full");
+        d1.SelectList.Add("cancel", "Cancel");
+        d1.Callback = () => RefuelCallback();
+        dd.Add(d1);
+        // show
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (obj)
+            Destroy(obj);
+        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        manager.Show(dd);
+    }
+
+    // refuel callback
+    public static void RefuelCallback()
+    {
+        float fuelPrice = 5.6f;  // 0.01fuel->5.6yuan
+        Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
+
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        DialogManager manager = obj.GetComponent<DialogManager>();
+        float amount = 1f;
+
+        if (manager.Result == "0.1")
+        {
+            amount = 0.1f;
+        }
+        else if (manager.Result == "0.5")
+        {
+            amount = 0.5f;
+        }
+        else if (manager.Result == "full")
+        {
+            amount = 1f - GlobalStates.currentFuel;
+        }
+        else
+        {
+            Show("Cancel rest operation");
+            return;
+        }
+
+        float cost = fuelPrice * amount * 100;
+        // check affordable
+        if (GlobalStates.currentMoney.Affordable(cost))
+        {
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 20));
+            GlobalStates.currentMoney.Spend(cost);
+            GlobalStates.ChangeFuel(amount);
+            // show pic
+            GameObject picObj = Instantiate(Resources.Load("FuelPic") as GameObject, canvas);
+            Destroy(picObj, 3f);
+            MyDialogManager.Show(string.Format("Cost ¥{0}.", (int)cost));
+        }
+        else
+        {
+            MyDialogManager.Show(string.Format("It will cost ¥{0}. You don't have enough money", (int)cost));
+        }
+    }
+
 }

@@ -8,14 +8,12 @@ public class GasStationPanel : MonoBehaviour
     //[Header("Objects")]
 
     [Header("Settings")]
-    public float fuelPrice = 5.6f;  // 0.01fuel->5.6yuan
     public float foodPrice = 20f;
     public float showerPrice = 10f;
     public float foodAmount = 0.5f;
     public float showerEnergyAmount = 0.1f;
 
     [Header("Prefabs")]
-    public GameObject refuelPic;
     public Text popUpText;
 
     private Transform canvas;
@@ -29,25 +27,7 @@ public class GasStationPanel : MonoBehaviour
     // refuel
     public void RefuelAll()
     {
-        float amount = 1f - GlobalStates.currentFuel;
-        float cost = fuelPrice * amount * 100;
-        // check affordable
-        if (GlobalStates.currentMoney.Affordable(cost))
-        {
-            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 20));
-            GlobalStates.currentMoney.Spend(cost);
-            GlobalStates.currentFuel = 1f;
-            // show pic
-            GameObject obj = Instantiate(refuelPic, canvas);
-            Destroy(obj, 3f);
-            MyDialogManager.Show(string.Format("Cost ¥{0}.", (int)cost));
-        }
-        else
-        {
-            MyDialogManager.Show(string.Format("It will cost ¥{0}. You don't have enough money", (int)cost));
-        }
-
-
+        MyDialogManager.RefuelDialog();
     }
 
     // buy food and eat

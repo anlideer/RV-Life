@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Refuel to full
+  m_Text: Refuel
 --- !u!1 &1001435253406323006
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,9 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffcd2f0a82fac3a4ab279b7c36831caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuelPrice: 5.6
   foodPrice: 20
-  refuelPic: {fileID: 9140043772721328201, guid: 411a598c9eaff6842a3ed44a8ea53747, type: 3}
+  showerPrice: 10
+  foodAmount: 0.5
+  showerEnergyAmount: 0.1
   popUpText: {fileID: 8260187700166437269, guid: 8798d5ac834abf14a9b095849b7422fb, type: 3}
 --- !u!1 &1001435253741692841
 GameObject:

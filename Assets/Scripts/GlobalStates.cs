@@ -30,7 +30,7 @@ public class GlobalStates: MonoBehaviour
                 GlobalStates.currentMoney.Spend(100);
                 Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
                 GameObject obj = Instantiate(Resources.Load("FoodBag") as GameObject, canvas);
-                Destroy(obj, 3f);
+                Destroy(obj, 2f);
             }
             else
             {
@@ -48,7 +48,7 @@ public class GlobalStates: MonoBehaviour
             GlobalStates.currentEnergy = 1f;
             Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
             GameObject obj = Instantiate(Resources.Load("Night") as GameObject, canvas);
-            Destroy(obj, 3f);
+            Destroy(obj, 2f);
         }
 
         if (currentFuel <= 0f)
@@ -63,7 +63,7 @@ public class GlobalStates: MonoBehaviour
                 GlobalStates.ChangeFuel(0.2f);
                 Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
                 GameObject obj = Instantiate(Resources.Load("Tier") as GameObject, canvas);
-                Destroy(obj, 3f);
+                Destroy(obj, 2f);
             }
             else
             {
