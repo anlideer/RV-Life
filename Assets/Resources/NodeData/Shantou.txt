@@ -1,0 +1,4 @@
+Guangzhou,415,1,0.4
+Hongkong,365,1,0.6
+Ganzhou,492,1,0.3
+Xiamen,249,1,0.6

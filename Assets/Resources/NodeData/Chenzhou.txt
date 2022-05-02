@@ -1,0 +1,4 @@
+Guangzhou,366,1,0.2
+Huaihua,518,1,0.2
+Changsha,317,1,0.2
+Ganzhou,246,1,0.2

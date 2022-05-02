@@ -12,6 +12,7 @@ public class VanUI : MonoBehaviour
     public Text waterText;
     public Text greyText;
     public Text blackText;
+    public GameObject delivery;
 
     private void Start()
     {
@@ -31,6 +32,11 @@ public class VanUI : MonoBehaviour
             gasPanel.SetActive(true);
         else
             gasPanel.SetActive(false);
+
+        if (GlobalStates.currentLocation.detail == LocationDetail.PARKING)
+            delivery.SetActive(true);
+        else
+            delivery.SetActive(false);
     }
 
     public void OpenWaterPanel()
@@ -115,6 +121,22 @@ public class VanUI : MonoBehaviour
             VanStates.ProduceGrey(grey);
         }
 
+    }
+
+    public void BuyFoodDelivery()
+    {
+        if (GlobalStates.currentMoney.Affordable(30))
+        {
+            MyDialogManager.Show("Eating......Happy to eat local food.");
+            GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
+            GlobalStates.currentMoney.Spend(30);
+            GlobalStates.ChangeHealth(0.7f);
+            GlobalStates.ChangeEnergy(0.1f);
+        }
+        else
+        {
+            MyDialogManager.Show("I can't afford this.");
+        }
     }
 
 }

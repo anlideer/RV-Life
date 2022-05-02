@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GlobalStates: MonoBehaviour
 {
@@ -35,7 +36,7 @@ public class GlobalStates: MonoBehaviour
             else
             {
                 MyDialogManager.Show(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
-                // TODO: back to main menu
+                SceneManager.LoadScene("Menu");
             }
         }
 
@@ -68,7 +69,8 @@ public class GlobalStates: MonoBehaviour
             else
             {
                 MyDialogManager.Show(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
-                // TODO: game over
+                SceneManager.LoadScene("Menu");
+
             }
         }
 

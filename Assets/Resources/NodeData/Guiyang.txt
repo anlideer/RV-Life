@@ -1,1 +1,4 @@
 Zunyi,160,1,0.2
+Xichang,745,1,0.3
+Nanning,583,1,0.3
+Huaihua,431,1,0.3

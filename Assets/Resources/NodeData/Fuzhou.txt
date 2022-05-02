@@ -1,0 +1,3 @@
+Nanping,226,1,0.3
+Xiamen,273,1,0.3
+Wenzhou,319,1,0.3

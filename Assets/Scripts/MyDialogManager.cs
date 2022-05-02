@@ -173,7 +173,7 @@ public class MyDialogManager : MonoBehaviour
         }
         else
         {
-            MyDialogManager.Show(string.Format("It will cost ¥{0}. You don't have enough money", (int)cost));
+            MyDialogManager.Show(string.Format("It will cost ¥{0}. I don't have enough money", (int)cost));
         }
     }
 
