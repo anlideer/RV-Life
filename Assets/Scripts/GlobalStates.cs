@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GlobalStates: MonoBehaviour
 {
     public static MyTime currentTime = new MyTime(1, 8, 0);
-    public static MyMoney currentMoney = new MyMoney(6000f);
+    public static MyMoney currentMoney = new MyMoney(1f);
     public static MyLocation currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
     public static float currentHealth = 1f; // 0-1f
     public static float currentEnergy = 1f; // 0-1f
@@ -16,6 +16,7 @@ public class GlobalStates: MonoBehaviour
     public static bool isStopped = false;
     public static bool isDriving = false;
     public static bool isSleeping = false;
+
 
     public static void CheckConditions()
     {
@@ -35,8 +36,7 @@ public class GlobalStates: MonoBehaviour
             }
             else
             {
-                MyDialogManager.Show(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
-                SceneManager.LoadScene("Menu");
+                MyDialogManager.ShowandGameover(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
             }
         }
 
@@ -68,38 +68,49 @@ public class GlobalStates: MonoBehaviour
             }
             else
             {
-                MyDialogManager.Show(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
-                SceneManager.LoadScene("Menu");
-
+                MyDialogManager.ShowandGameover(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
             }
         }
 
         if (currentBattery <= 0f)
         {
             currentBattery = 0f;
-            MyDialogManager.Show("Your van is out of electricity. Use some fuel to get it recharged.");
-            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
-            GlobalStates.ChangeFuel(-0.1f);
-            GlobalStates.ChangeBattery(0.3f);
+            if (currentFuel >= 0.1f)
+            {
+                MyDialogManager.Show("Your van is out of electricity. Use some fuel to get it recharged.");
+                GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
+                GlobalStates.ChangeFuel(-0.1f);
+                GlobalStates.ChangeBattery(0.3f);
+            }
+            else
+            {
+                if (currentMoney.Affordable(300))
+                {
+                    MyDialogManager.Show("Your van is out of electricity and you don't have enough fuel. Call for help. (Cost 300)");
+                    currentTime.TimePass(new MyTime(0, 2, 0));
+                    currentMoney.Spend(300);
+                    ChangeBattery(0.6f);
+                }
+                else
+                {
+                    MyDialogManager.ShowandGameover(new List<string> { "Your van is out of electricity and you don't have enough fuel. You can't afford to call for help (300)", 
+                        "Game Over"});
+                }
+            }
         }
-
-        // TODO: deal with cleanness, and van states (water system) warning and consequences.
-        // i.e. low cleanness can cause energy going down faster.
-        /*
-        if (currentClean <= 0f)
-        {
-            currentClean = 0f;
-            res += "Your cleanness goes to zero.\n";
-        }
-        */
 
     }
 
     // driving decrease energy and fuel
     public static void Driving(float health_consumed, float energy_consumed, float fuel_consumed, float clean_consumed, float battery_gain)
     {
+        // zero cleanness penalty (energy loss)
+        float fac = 1f;
+        if (GlobalStates.currentClean <= 0f)
+            fac = 1.2f;
+
         ChangeHealth(-health_consumed);
-        ChangeEnergy(-energy_consumed);
+        ChangeEnergy(-energy_consumed * fac);
         ChangeFuel(-fuel_consumed);
         ChangeClean(-clean_consumed);
         ChangeBattery(battery_gain);

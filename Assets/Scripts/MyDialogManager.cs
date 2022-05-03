@@ -2,9 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Doublsb.Dialog;
+using UnityEngine.SceneManagement;
 
 public class MyDialogManager : MonoBehaviour
 {
+    public static void ShowandGameover(List<string> plainTexts)
+    {
+        SetGameStop(true);
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (obj)
+            Destroy(obj);
+        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+
+        List<DialogData> datas = new List<DialogData>();
+        for (int i = 0; i < plainTexts.Count; i++)
+        {
+            var tmp = new DialogData(plainTexts[i]);
+            if (i == plainTexts.Count - 1)
+                tmp.Callback = () => EndGame();
+            datas.Add(tmp);
+        }
+
+        manager.Show(datas);
+    }
+
+    // callback
+    public static void EndGame()
+    {
+        DialogFinished();
+        SceneManager.LoadScene("Menu");
+    }
+
     public static void Show(List<string> plainTexts)
     {
         SetGameStop(true);

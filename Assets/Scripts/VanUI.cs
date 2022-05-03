@@ -76,7 +76,8 @@ public class VanUI : MonoBehaviour
     public void MaintainWaterSystem(float duration)
     {
         waterPanel.SetActive(false);
-        // TODO: maintain, check the water system
+        // maintain, check the water system
+        
     }
 
     // back to map
@@ -127,7 +128,7 @@ public class VanUI : MonoBehaviour
     {
         if (GlobalStates.currentMoney.Affordable(30))
         {
-            MyDialogManager.Show("Eating......Happy to eat local food.");
+            MyDialogManager.Show("Eating......Happy to eat local food. (Cost 30)");
             GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
             GlobalStates.currentMoney.Spend(30);
             GlobalStates.ChangeHealth(0.7f);
