@@ -1,0 +1,4 @@
+Zhangjiakou,366,1,0.3
+Beijing,229,1,0.3
+Tianjin,303,1,0.3
+Jinzhou,351,1,0.3

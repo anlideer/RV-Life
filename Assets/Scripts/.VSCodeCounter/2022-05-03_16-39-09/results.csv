@@ -1,0 +1,23 @@
+"filename", "language", "C#", "comment", "blank", "total"
+"c:\Dream\RV Life\Assets\Scripts\ArrowCtrl.cs", "C#", 37, 105, 12, 154
+"c:\Dream\RV Life\Assets\Scripts\BasicClasses\MyLocation.cs", "C#", 84, 5, 12, 101
+"c:\Dream\RV Life\Assets\Scripts\BasicClasses\MyMoney.cs", "C#", 30, 0, 7, 37
+"c:\Dream\RV Life\Assets\Scripts\BasicClasses\MyTime.cs", "C#", 93, 2, 15, 110
+"c:\Dream\RV Life\Assets\Scripts\BasicClasses\Node.cs", "C#", 36, 1, 8, 45
+"c:\Dream\RV Life\Assets\Scripts\BasicClasses\Route.cs", "C#", 36, 0, 7, 43
+"c:\Dream\RV Life\Assets\Scripts\DepartUI.cs", "C#", 104, 7, 16, 127
+"c:\Dream\RV Life\Assets\Scripts\GameManager.cs", "C#", 45, 4, 6, 55
+"c:\Dream\RV Life\Assets\Scripts\GasStationPanel.cs", "C#", 52, 4, 14, 70
+"c:\Dream\RV Life\Assets\Scripts\GlobalStates.cs", "C#", 145, 2, 20, 167
+"c:\Dream\RV Life\Assets\Scripts\HeaderUI.cs", "C#", 58, 1, 11, 70
+"c:\Dream\RV Life\Assets\Scripts\Helper\PercentDisplay.cs", "C#", 28, 1, 5, 34
+"c:\Dream\RV Life\Assets\Scripts\Helper\PinLocationCalculator.cs", "C#", 37, 1, 6, 44
+"c:\Dream\RV Life\Assets\Scripts\MapController.cs", "C#", 246, 17, 30, 293
+"c:\Dream\RV Life\Assets\Scripts\Menu.cs", "C#", 41, 1, 9, 51
+"c:\Dream\RV Life\Assets\Scripts\MyDialogManager.cs", "C#", 178, 10, 22, 210
+"c:\Dream\RV Life\Assets\Scripts\Settings.cs", "C#", 45, 0, 7, 52
+"c:\Dream\RV Life\Assets\Scripts\StorageManager.cs", "C#", 87, 6, 18, 111
+"c:\Dream\RV Life\Assets\Scripts\TriponMap.cs", "C#", 83, 7, 12, 102
+"c:\Dream\RV Life\Assets\Scripts\VanStates.cs", "C#", 111, 7, 12, 130
+"c:\Dream\RV Life\Assets\Scripts\VanUI.cs", "C#", 120, 3, 21, 144
+"Total", "-", 1696, 184, 270, 2150

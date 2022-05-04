@@ -1,0 +1,4 @@
+Shijiazhuang,289,1,0.2
+Tianjin,137,1,0.2
+Zhangjiakou,193,1,0.2
+Chengde,226,1,0.3

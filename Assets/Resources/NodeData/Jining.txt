@@ -1,0 +1,3 @@
+Lianyungang,331,1,0.3
+Jinan,185,1,0.3
+Zhengzhou,315,1,0.4

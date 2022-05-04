@@ -1,0 +1,4 @@
+Dezhou,223,1,0.3
+Shijiazhuang,314,1,0.2
+Beijing,135,1,0.2
+Chengde,302,1,0.3

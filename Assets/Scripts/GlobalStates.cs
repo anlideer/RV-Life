@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GlobalStates: MonoBehaviour
 {
     public static MyTime currentTime = new MyTime(1, 8, 0);
-    public static MyMoney currentMoney = new MyMoney(1f);
+    public static MyMoney currentMoney = new MyMoney(6000f);
     public static MyLocation currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
     public static float currentHealth = 1f; // 0-1f
     public static float currentEnergy = 1f; // 0-1f

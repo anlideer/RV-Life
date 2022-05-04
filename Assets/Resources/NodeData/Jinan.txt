@@ -1,0 +1,4 @@
+Lianyungang,365,1,0.3
+Qingdao,367,1,0.2
+Jining,185,1,0.3
+Dezhou,128,1,0.2
