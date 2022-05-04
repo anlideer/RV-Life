@@ -28,7 +28,7 @@ public class MyDialogManager : MonoBehaviour
     }
 
     // callback
-    public static void EndGame()
+    private static void EndGame()
     {
         DialogFinished();
         SceneManager.LoadScene("Menu");
@@ -70,7 +70,7 @@ public class MyDialogManager : MonoBehaviour
     }
 
     // callback
-    public static void DialogFinished()
+    private static void DialogFinished()
     {
         SetGameStop(false);
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
@@ -78,7 +78,7 @@ public class MyDialogManager : MonoBehaviour
             Destroy(obj);
     }
 
-    public static void SetGameStop(bool isStop)
+    private static void SetGameStop(bool isStop)
     {
         GlobalStates.isStopped = isStop;
     }
@@ -104,7 +104,7 @@ public class MyDialogManager : MonoBehaviour
     }
 
     // callback for sleep
-    public static void SleepCallback()
+    private static void SleepCallback()
     {
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
         DialogManager manager = obj.GetComponent<DialogManager>();
@@ -161,7 +161,7 @@ public class MyDialogManager : MonoBehaviour
     }
 
     // refuel callback
-    public static void RefuelCallback()
+    private static void RefuelCallback()
     {
         float fuelPrice = 5.6f;  // 0.01fuel->5.6yuan
         Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
@@ -203,6 +203,124 @@ public class MyDialogManager : MonoBehaviour
         else
         {
             MyDialogManager.Show(string.Format("It will cost ¥{0}. I don't have enough money", (int)cost));
+        }
+    }
+
+
+    // phone dialog
+    public static void PhoneDialog()
+    {
+        List<DialogData> dd = new List<DialogData>();
+        DialogData d1 = new DialogData("Choose option");
+        if (GlobalStates.currentLocation.detail == LocationDetail.PARKING)
+            d1.SelectList.Add("food", "Buy food delivery (30)");
+        d1.SelectList.Add("weather", "See weather forecast");
+        d1.SelectList.Add("work", "Online part-time job");
+        d1.SelectList.Add("exit", "Stop using phone");
+        d1.Callback = () => PhoneCallback();
+        dd.Add(d1);
+        // show
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (obj)
+            Destroy(obj);
+        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        manager.Show(dd);
+    }
+
+    // phone callback
+    private static void PhoneCallback()
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        DialogManager manager = obj.GetComponent<DialogManager>();
+
+        if (manager.Result == "food")
+        {
+            BuyFoodDelivery();
+        }
+        else if (manager.Result == "weather")
+        {
+            // TODO: weather system
+
+        }
+        else if (manager.Result == "work")
+        {
+            WorkDialog();
+        }
+        else
+        {
+            DialogFinished();
+        }
+    }
+
+    private static void BuyFoodDelivery()
+    {
+        if (GlobalStates.currentMoney.Affordable(30))
+        {
+            MyDialogManager.Show("Eating......Happy to eat local food. (Cost 30)");
+            GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
+            GlobalStates.currentMoney.Spend(30);
+            GlobalStates.ChangeHealth(0.7f);
+            GlobalStates.ChangeEnergy(0.1f);
+        }
+        else
+        {
+            MyDialogManager.Show("I can't afford this.");
+        }
+    }
+
+    // online part-time work dialog options
+    private static void WorkDialog()
+    {
+        List<DialogData> dd = new List<DialogData>();
+        DialogData d1 = new DialogData("Choose work option");
+        d1.SelectList.Add("2", "2 hours. Profit: ¥15-20.");
+        d1.SelectList.Add("4", "4 hours. Profit: ¥35-45.");
+        d1.SelectList.Add("6", "6 hours. Profit: ¥60-80.");
+        d1.SelectList.Add("exit", "Stop using phone");
+        d1.Callback = () => WorkCallback();
+        dd.Add(d1);
+        // show
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (obj)
+            Destroy(obj);
+        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        manager.Show(dd);
+    }
+
+    private static void WorkCallback()
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        DialogManager manager = obj.GetComponent<DialogManager>();
+    
+        if (manager.Result == "2")
+        {
+            int profit = Random.Range(15, 21);
+            Show(string.Format("Working... Earn ¥{0}.", profit));
+            GlobalStates.currentTime.TimePass(new MyTime(0, 2, 0));
+            GlobalStates.ChangeEnergy(-0.05f);
+            GlobalStates.currentMoney.Earn(profit);
+        }
+        else if (manager.Result == "4")
+        {
+            int profit = Random.Range(35, 46);
+            Show(string.Format("Working... Earn ¥{0}.", profit));
+            GlobalStates.currentTime.TimePass(new MyTime(0, 4, 0));
+            GlobalStates.ChangeEnergy(-0.1f);
+            GlobalStates.currentMoney.Earn(profit);
+        }
+        else if (manager.Result == "6")
+        {
+            int profit = Random.Range(60, 81);
+            Show(string.Format("Working... Earn ¥{0}.", profit));
+            GlobalStates.currentTime.TimePass(new MyTime(0, 6, 0));
+            GlobalStates.ChangeEnergy(-0.15f);
+            GlobalStates.currentMoney.Earn(profit);
+        }
+        else
+        {
+            DialogFinished();
         }
     }
 

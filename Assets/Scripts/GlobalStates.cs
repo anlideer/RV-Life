@@ -17,6 +17,12 @@ public class GlobalStates: MonoBehaviour
     public static bool isDriving = false;
     public static bool isSleeping = false;
 
+    private void Update()
+    {
+        if (!isStopped)
+            CheckConditions();        
+    }
+
 
     public static void CheckConditions()
     {
@@ -40,7 +46,7 @@ public class GlobalStates: MonoBehaviour
             }
         }
 
-        if (currentEnergy <= 0f)
+        else if (currentEnergy <= 0f)
         {
             currentEnergy = 0f;
             MyDialogManager.Show("Your energy goes to zero...Stop and spend 12 hours sleeping...");
@@ -52,7 +58,7 @@ public class GlobalStates: MonoBehaviour
             Destroy(obj, 2f);
         }
 
-        if (currentFuel <= 0f)
+        else if (currentFuel <= 0f)
         {
             currentFuel = 0f;
             if (GlobalStates.currentMoney.Affordable(500))
@@ -72,7 +78,7 @@ public class GlobalStates: MonoBehaviour
             }
         }
 
-        if (currentBattery <= 0f)
+        else if (currentBattery <= 0f)
         {
             currentBattery = 0f;
             if (currentFuel >= 0.1f)
@@ -114,8 +120,6 @@ public class GlobalStates: MonoBehaviour
         ChangeFuel(-fuel_consumed);
         ChangeClean(-clean_consumed);
         ChangeBattery(battery_gain);
-
-        CheckConditions();
     }
 
     public static void ChangeHealth(float change)

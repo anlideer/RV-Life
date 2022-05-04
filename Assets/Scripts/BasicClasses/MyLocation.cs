@@ -77,7 +77,7 @@ public class MyLocation
     {
         // TODO: make it like a seeting
         // consume energy and fuel
-        float energyCell = 0.0008f;
+        float energyCell = 0.0003f;
         float fuelCell = 0.0015f;    
         float healthCell = 0.0003f;  // starvation
         float cleanCell = 0.0000375f;

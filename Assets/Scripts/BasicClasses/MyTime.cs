@@ -93,6 +93,7 @@ public class MyTime
             VanStates.ProduceGrey(0.00005f * tmpMinutes);
             GlobalStates.ChangeHealth(-0.0012f * tmpMinutes);
             GlobalStates.ChangeClean(-0.00035f * tmpMinutes);
+            GlobalStates.ChangeEnergy(-0.001f * tmpMinutes);
         }
         else
         {
@@ -102,7 +103,7 @@ public class MyTime
 
         if (!GlobalStates.isDriving)
         {
-            GlobalStates.ChangeBattery(-0.0004f * tmpMinutes);
+            GlobalStates.ChangeBattery(-0.0002f * tmpMinutes);
         }
     }
 
