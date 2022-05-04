@@ -63,6 +63,5 @@ public class Settings : MonoBehaviour
             PlayerPrefs.SetInt("Speed", 1);
        if (fastSpeed.isOn)
             PlayerPrefs.SetInt("Speed", 2);
-        Debug.Log("Change" + PlayerPrefs.GetInt("Speed").ToString());
     }
 }

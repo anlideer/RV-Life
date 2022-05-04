@@ -11,10 +11,9 @@ public class MyDialogManager : MonoBehaviour
     {
         SetGameStop(true);
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
 
         List<DialogData> datas = new List<DialogData>();
         for (int i = 0; i < plainTexts.Count; i++)
@@ -39,8 +38,8 @@ public class MyDialogManager : MonoBehaviour
     {
         SetGameStop(true);
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
         GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
         DialogManager manager = dialogObj.GetComponent<DialogManager>();
 
@@ -59,12 +58,10 @@ public class MyDialogManager : MonoBehaviour
     public static void Show(string plainText)
     {
 
-        SetGameStop(true);
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
 
         DialogData d = new DialogData(plainText);
         manager.Show(d);
@@ -75,9 +72,6 @@ public class MyDialogManager : MonoBehaviour
     private static void DialogFinished()
     {
         SetGameStop(false);
-        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
     }
 
     private static void SetGameStop(bool isStop)
@@ -98,10 +92,9 @@ public class MyDialogManager : MonoBehaviour
         dd.Add(d1);
         // show
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
         manager.Show(dd);
     }
 
@@ -109,6 +102,8 @@ public class MyDialogManager : MonoBehaviour
     private static void SleepCallback()
     {
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
         DialogManager manager = obj.GetComponent<DialogManager>();
 
         if (manager.Result == "1h")
@@ -155,10 +150,9 @@ public class MyDialogManager : MonoBehaviour
         dd.Add(d1);
         // show
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
         manager.Show(dd);
     }
 
@@ -169,6 +163,8 @@ public class MyDialogManager : MonoBehaviour
         Transform canvas = GameObject.FindGameObjectWithTag("MainCanvas").transform;
 
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
         DialogManager manager = obj.GetComponent<DialogManager>();
         float amount = 1f;
 
@@ -223,10 +219,9 @@ public class MyDialogManager : MonoBehaviour
         dd.Add(d1);
         // show
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
         manager.Show(dd);
     }
 
@@ -234,7 +229,10 @@ public class MyDialogManager : MonoBehaviour
     private static void PhoneCallback()
     {
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
         DialogManager manager = obj.GetComponent<DialogManager>();
+        obj.SetActive(true);
 
         if (manager.Result == "food")
         {
@@ -284,16 +282,17 @@ public class MyDialogManager : MonoBehaviour
         dd.Add(d1);
         // show
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
-        if (obj)
-            Destroy(obj);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
         manager.Show(dd);
     }
 
     private static void WorkCallback()
     {
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
         DialogManager manager = obj.GetComponent<DialogManager>();
 
         Random.InitState(System.Environment.TickCount);

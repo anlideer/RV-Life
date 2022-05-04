@@ -45,7 +45,11 @@ public class Weather
         // rain?
         float r = Random.value;
         if (r < 0.8f)
+        {
             nextDayWeather = WeatherType.NORMAL;
+            nextDuration = 0;
+            nextStartHour = 0;
+        }
         else if (r < 0.95f)
         {
             nextDayWeather = WeatherType.RAIN;
