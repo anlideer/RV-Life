@@ -34,6 +34,17 @@ public class DepartUI : MonoBehaviour
         if (isMoving)
         {
             ShowUpdatingInfo();
+
+            // rainstorm
+            if (GlobalStates.currentWeather.GetWeatherNow() == WeatherType.RAINSTORM && !TriponMap.goToGas)
+            {
+                int tmp = map.StopAtNextStation();
+                MyDialogManager.Show(new List<string> {
+                    "Because there is rainstorm happening, will stop as soon as possible.",
+                    string.Format("Will stop at the next available gas station ({0}km)", tmp)
+                });
+                stopBtn.SetActive(false); // can't press again before arrival at station
+            }
         }
     }
 
@@ -105,7 +116,10 @@ public class DepartUI : MonoBehaviour
         }
         else
         {
-            map.StartTrip(route);
+            if (GlobalStates.currentWeather.GetWeatherNow() == WeatherType.RAINSTORM)
+                MyDialogManager.Show("Better not go when rainstorm.");
+            else
+                map.StartTrip(route);
         }
     }
 

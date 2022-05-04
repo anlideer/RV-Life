@@ -25,7 +25,6 @@ public class Menu : MonoBehaviour
     {
         // TODO: load the scene with opening story
 
-        GlobalStates.seed = Random.Range(1, 10000);
         SceneManager.LoadScene("Map");
     }
 

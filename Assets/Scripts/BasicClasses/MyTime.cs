@@ -9,6 +9,7 @@ public class MyTime
     public int hour;
     public int minute;
     private float minuteToBeAdded = 0;
+    private bool reported = false;  // rain reported
 
     public MyTime(int d, int h, int m)
     {
@@ -19,6 +20,8 @@ public class MyTime
 
     public void TimePass(MyTime t)
     {
+        int lastDay = day;
+        int lastHour = hour;
         day += t.day;
         hour += t.hour;
         minute += t.minute;
@@ -34,7 +37,40 @@ public class MyTime
         }
 
         TimePassPenalty(t);
-        
+        if (day > lastDay)
+        {
+            GlobalStates.currentWeather.GenerateNextDay();
+            reported = false;
+            Debug.Log(GlobalStates.currentWeather.nextDayWeather);
+            Debug.Log(GlobalStates.currentWeather.nextStartHour);
+            Debug.Log(GlobalStates.currentWeather.nextDuration);
+        }
+
+        var w = GlobalStates.currentWeather;
+        if (hour > lastHour && w.weather != WeatherType.NORMAL)
+        {
+            if (reported)
+            {
+                if (hour >= w.startHour + w.duration)
+                {
+                    MyDialogManager.Show("The rain stopped. The weather is now normal again.");
+                    reported = false;
+                }
+            }
+            else
+            {
+                if (hour >= w.startHour && hour < w.startHour + w.duration)
+                {
+                    reported = true;
+                    string description;
+                    if (w.weather == WeatherType.RAIN)
+                        description = "Rain started. The speed will be slightly lower.";
+                    else
+                        description = "Rainstorm started. It's better not to drive.";
+                    MyDialogManager.Show(description);
+                }
+            }
+        }
     }
 
     public void TimePassLittle(float m)

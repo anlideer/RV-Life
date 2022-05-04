@@ -8,6 +8,7 @@ public class GlobalStates: MonoBehaviour
     public static MyTime currentTime = new MyTime(1, 8, 0);
     public static MyMoney currentMoney = new MyMoney(6000f);
     public static MyLocation currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
+    public static Weather currentWeather = new Weather();
     public static float currentHealth = 1f; // 0-1f
     public static float currentEnergy = 1f; // 0-1f
     public static float currentFuel = 1f;   // 0-1f
@@ -16,7 +17,6 @@ public class GlobalStates: MonoBehaviour
     public static bool isStopped = false;
     public static bool isDriving = false;
     public static bool isSleeping = false;
-    public static int seed;
 
     private void Update()
     {

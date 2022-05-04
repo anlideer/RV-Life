@@ -77,20 +77,50 @@ public class MyLocation
     {
         // double the speed
         int fac = PlayerPrefs.GetInt("Speed", 1);
-        Debug.Log(fac);
         d = d * fac;
 
-        // TODO: make it like a seeting
+        // TODO: make it like a setting file
         // consume energy and fuel
+        // default: highway
         float energyCell = 0.0003f;
         float fuelCell = 0.0015f;    
         float healthCell = 0.0003f;  // starvation
         float cleanCell = 0.0000375f;
         float batteryCell = 0.001f;
+        float sp = 0.65f;   // bigger, slower
+        var rt = GlobalStates.currentLocation.route.routeType;
+        if (rt == RouteType.MountainUp)
+        {
+            sp = 0.7f;
+            fuelCell = 0.002f;
+        }
+        else if (rt == RouteType.MountainDown)
+        {
+            sp = 0.7f;
+            fuelCell = 0.001f;
+        }
+        else if (rt == RouteType.Normal)
+        {
+            sp = 0.8f;
+        }
         GlobalStates.Driving(healthCell*d, energyCell * d, fuelCell * d, cleanCell*d, batteryCell*d);
 
         // consume time
-        GlobalStates.currentTime.TimePassLittle(0.65f * d);
+        // deal with weather
+        var wt = GlobalStates.currentWeather.GetWeatherNow();
+        if (wt == WeatherType.NORMAL)
+        {
+            GlobalStates.currentTime.TimePassLittle(sp * d);
+        }
+        else if (wt == WeatherType.RAIN)
+        {
+            // consume more time, which means the speed is lower
+            GlobalStates.currentTime.TimePassLittle(1.2f * sp * d);
+        }
+        else if (wt == WeatherType.RAINSTORM)
+        {
+            GlobalStates.currentTime.TimePassLittle(1.3f * sp * d);
+        }
 
         // add
         distanceFromStart += d;

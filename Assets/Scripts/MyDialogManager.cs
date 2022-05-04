@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MyDialogManager : MonoBehaviour
 {
+
     public static void ShowandGameover(List<string> plainTexts)
     {
         SetGameStop(true);
@@ -57,6 +58,7 @@ public class MyDialogManager : MonoBehaviour
 
     public static void Show(string plainText)
     {
+
         SetGameStop(true);
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
         if (obj)
@@ -240,8 +242,8 @@ public class MyDialogManager : MonoBehaviour
         }
         else if (manager.Result == "weather")
         {
-            // TODO: weather system
-
+            Show(GlobalStates.currentWeather.GetForecast());
+            GlobalStates.currentTime.TimePass(new MyTime(0, 0, 10));
         }
         else if (manager.Result == "work")
         {

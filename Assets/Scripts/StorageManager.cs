@@ -26,22 +26,23 @@ public class StorageManager
     public string cityName;
     public float disFromStart;
     public int locationDetail;
+    public int weather;
+    public int nextWeather;
+    public int duration;
+    public int startHour;
+    public int nextDuration;
+    public int nextStartHour;
 
     // van states
     public float waterTank = 1f;
     public float greyTank = 0f;
     public float blackTank = 0f;
 
-    // seed! (for random events that cannot be changed via sl, like weather)
-    public int seed;
-
     
     public void LoadFromStorage()
     {
         string s = File.ReadAllText(Application.dataPath + "/Storage.txt");
         var a = JsonUtility.FromJson<StorageManager>(s);
-
-        GlobalStates.seed = a.seed;
 
         VanStates.waterTank = a.waterTank;
         VanStates.greyTank = a.greyTank;
@@ -69,12 +70,27 @@ public class StorageManager
             GlobalStates.currentLocation.detail = LocationDetail.ROAD;
         else if (a.locationDetail == 4)
             GlobalStates.currentLocation.detail = LocationDetail.ATTRACTION;
+
+        if (a.weather == 1)
+            GlobalStates.currentWeather.weather = WeatherType.NORMAL;
+        else if (a.weather == 2)
+            GlobalStates.currentWeather.weather = WeatherType.RAIN;
+        else if (a.weather == 3)
+            GlobalStates.currentWeather.weather = WeatherType.RAINSTORM;
+        if (a.nextWeather == 1)
+            GlobalStates.currentWeather.nextDayWeather = WeatherType.NORMAL;
+        else if (a.nextWeather == 2)
+            GlobalStates.currentWeather.nextDayWeather = WeatherType.RAIN;
+        else if (a.nextWeather == 3)
+            GlobalStates.currentWeather.nextDayWeather = WeatherType.RAINSTORM;
+        GlobalStates.currentWeather.duration = a.duration;
+        GlobalStates.currentWeather.startHour = a.startHour;
+        GlobalStates.currentWeather.nextDuration = a.nextDuration;
+        GlobalStates.currentWeather.nextStartHour = a.nextStartHour;
     }
 
     public void SaveToStorage()
     {
-        seed = GlobalStates.seed;
-
         waterTank = VanStates.waterTank;
         greyTank = VanStates.greyTank;
         blackTank = VanStates.blackTank;
@@ -106,7 +122,25 @@ public class StorageManager
         else if (location.detail == LocationDetail.ATTRACTION)
             locationDetail = 4;
 
-        
+        var w = GlobalStates.currentWeather;
+        if (w.weather == WeatherType.NORMAL)
+            weather = 1;
+        else if (w.weather == WeatherType.RAIN)
+            weather = 2;
+        else if (w.weather == WeatherType.RAINSTORM)
+            weather = 3;
+        if (w.nextDayWeather == WeatherType.NORMAL)
+            nextWeather = 1;
+        else if (w.nextDayWeather == WeatherType.RAIN)
+            nextWeather = 2;
+        else if (w.nextDayWeather == WeatherType.RAINSTORM)
+           nextWeather = 3;
+        duration = w.duration;
+        startHour = w.startHour;
+        nextDuration = w.nextDuration;
+        nextStartHour = w.nextStartHour;
+
+
         string s = JsonUtility.ToJson(this);
         File.WriteAllText(Application.dataPath + "/Storage.txt", s);
 

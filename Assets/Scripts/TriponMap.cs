@@ -18,7 +18,7 @@ public class TriponMap : MonoBehaviour
     private bool isMoving = false;
     private PinLocationCalculator calculator;
     private float disToGas;
-    private bool goToGas = false;
+    public static bool goToGas = false;
 
     private void Start()
     {
