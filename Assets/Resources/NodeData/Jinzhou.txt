@@ -1,2 +1,3 @@
 Chengde,351,1,0.3
 Shenyang,234,1,0.3
+Chifeng,252,1,0.4

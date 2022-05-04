@@ -1,3 +1,5 @@
 Beijing,192,1,0.2
 Shijiazhuang,379,1,0.3
 Chengde,370,1,0.3
+Datong,204,1,0.4
+Huhehaote,302,1,0.6

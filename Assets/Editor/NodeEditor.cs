@@ -44,7 +44,10 @@ public class NodeEditor : Editor
 
     private void AddList()
     {
-        node.routes.Add(new Route());
+        var r = new Route();
+        r.beauty = 0.3f;
+        r.routeType = RouteType.HighWay;
+        node.routes.Add(r);
     }
 
     private void DeleteRoute(int index)

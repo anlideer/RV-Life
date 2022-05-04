@@ -1,0 +1,3 @@
+Hulunbeier,1200,1,0.7
+Jinzhou,253,1,0.4
+Chengde,196,1,0.4

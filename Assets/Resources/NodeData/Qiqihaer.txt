@@ -1,2 +1,3 @@
 Haerbin,306,1,0.3
 Heihe,493,1,0.5
+Hulunbeier,460,1,0.6

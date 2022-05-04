@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MyDialogManager : MonoBehaviour
 {
-
     public static void ShowandGameover(List<string> plainTexts)
     {
         SetGameStop(true);
@@ -40,8 +39,7 @@ public class MyDialogManager : MonoBehaviour
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
         if (!obj)
             obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        GameObject dialogObj = Instantiate(Resources.Load("DialogAsset") as GameObject);
-        DialogManager manager = dialogObj.GetComponent<DialogManager>();
+        DialogManager manager = obj.GetComponent<DialogManager>();
 
         List<DialogData> datas = new List<DialogData>();
         for (int i = 0; i < plainTexts.Count; i++)

@@ -1,0 +1,4 @@
+Tianshui,605,1,0.8
+Lanzhou,426,1,0.5
+Huhehaote,680,5,0.7
+Zhangye,702,1,0.7

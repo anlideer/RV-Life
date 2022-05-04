@@ -1,0 +1,4 @@
+Rilong,796,4,0.8
+Xining,796,4,0.8
+Delingha,744,4,0.8
+Changdu,466,1,0.7

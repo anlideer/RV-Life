@@ -77,6 +77,15 @@ public class MapController : MonoBehaviour
     public void FocusCurrent()
     {
         Vector3 pos = currentNode.transform.position;
+        var r = departUI.route;
+        if (r != null)
+        {
+            Debug.Log(pos);
+            Vector3 des = nodeDic[r.destination.cityName].transform.position;
+            Debug.Log(des);
+            pos = (pos + des) / 2;
+        }
+        
         pos.z = cam.transform.position.z;
         cam.transform.position = pos;
         cam.orthographicSize = zoomInLimit;

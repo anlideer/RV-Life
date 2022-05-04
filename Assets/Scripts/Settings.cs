@@ -9,6 +9,7 @@ public class Settings : MonoBehaviour
     public Button saveButton;
     public Toggle normalSpeed;
     public Toggle fastSpeed;
+    public Toggle veryFastSpeed;
 
     private void OnEnable()
     {
@@ -21,10 +22,13 @@ public class Settings : MonoBehaviour
         else
             saveButton.interactable = false;
         // game speed
-        if (PlayerPrefs.GetInt("Speed", 1) == 1)
+        int i = PlayerPrefs.GetInt("Speed", 1);
+        if (i == 1)
             normalSpeed.isOn = true;
-        else
+        else if (i == 2)
             fastSpeed.isOn = true;
+        else
+            veryFastSpeed.isOn = true;
     }
 
     public void ClosePanel()
@@ -61,7 +65,9 @@ public class Settings : MonoBehaviour
     {
         if (normalSpeed.isOn)
             PlayerPrefs.SetInt("Speed", 1);
-       if (fastSpeed.isOn)
+        else if (fastSpeed.isOn)
             PlayerPrefs.SetInt("Speed", 2);
+        else if (veryFastSpeed.isOn)
+            PlayerPrefs.SetInt("Speed", 3);
     }
 }

@@ -1,0 +1,6 @@
+Yanan,314,1,0.4
+Hanzhong,293,1,0.3
+Yuncheng,243,1,0.3
+Nanyang,425,1,0.3
+Shiyan,306,1,0.3
+Tianshui,342,1,0.4

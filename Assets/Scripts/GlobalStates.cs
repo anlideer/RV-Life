@@ -18,14 +18,27 @@ public class GlobalStates: MonoBehaviour
     public static bool isDriving = false;
     public static bool isSleeping = false;
 
+    private float timeCnt;
+
+    private void Start()
+    {
+        timeCnt = 0;
+    }
+
     private void Update()
     {
         if (!isStopped)
-            CheckConditions();        
+        {
+            if (timeCnt < Time.timeSinceLevelLoad)
+            {
+                timeCnt = Time.timeSinceLevelLoad + 3f;
+                CheckConditions();
+            }
+        }     
     }
 
 
-    public static void CheckConditions()
+    public void CheckConditions()
     {
         if (currentHealth <= 0f)
         {
