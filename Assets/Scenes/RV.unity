@@ -262,6 +262,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1234934134}
     m_Modifications:
+    - target: {fileID: 121995547688157080, guid: 3ff093069fc09844f81d616dea42dc19, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 785366231930199384, guid: 3ff093069fc09844f81d616dea42dc19, type: 3}
       propertyPath: m_Name
       value: Header
@@ -595,7 +599,6 @@ MonoBehaviour:
   waterText: {fileID: 903381747}
   greyText: {fileID: 1379120607}
   blackText: {fileID: 1663417101}
-  delivery: {fileID: 1359532766}
 --- !u!114 &431440318
 MonoBehaviour:
   m_ObjectHideFlags: 0

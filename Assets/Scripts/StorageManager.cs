@@ -27,18 +27,21 @@ public class StorageManager
     public float disFromStart;
     public int locationDetail;
 
-
-
     // van states
     public float waterTank = 1f;
     public float greyTank = 0f;
     public float blackTank = 0f;
+
+    // seed! (for random events that cannot be changed via sl, like weather)
+    public int seed;
 
     
     public void LoadFromStorage()
     {
         string s = File.ReadAllText(Application.dataPath + "/Storage.txt");
         var a = JsonUtility.FromJson<StorageManager>(s);
+
+        GlobalStates.seed = a.seed;
 
         VanStates.waterTank = a.waterTank;
         VanStates.greyTank = a.greyTank;
@@ -70,6 +73,8 @@ public class StorageManager
 
     public void SaveToStorage()
     {
+        seed = GlobalStates.seed;
+
         waterTank = VanStates.waterTank;
         greyTank = VanStates.greyTank;
         blackTank = VanStates.blackTank;

@@ -9,10 +9,12 @@ public class Menu : MonoBehaviour
 {
     public GameObject aboutPanel;
     public Button continueButton;
+    public GameObject settingPanel;
 
     private void Awake()
     {
         aboutPanel.SetActive(false);
+        settingPanel.SetActive(false);
         if (!File.Exists(Application.dataPath + "/Storage.txt"))
             continueButton.interactable = false;
         else
@@ -22,6 +24,8 @@ public class Menu : MonoBehaviour
     public void StartNewGame()
     {
         // TODO: load the scene with opening story
+
+        GlobalStates.seed = Random.Range(1, 10000);
         SceneManager.LoadScene("Map");
     }
 
@@ -45,6 +49,11 @@ public class Menu : MonoBehaviour
     public void CloseAbout()
     {
         aboutPanel.SetActive(false);
+    }
+
+    public void OpenSetting()
+    {
+        settingPanel.SetActive(true);
     }
 
 }

@@ -16,6 +16,7 @@ public class GlobalStates: MonoBehaviour
     public static bool isStopped = false;
     public static bool isDriving = false;
     public static bool isSleeping = false;
+    public static int seed;
 
     private void Update()
     {

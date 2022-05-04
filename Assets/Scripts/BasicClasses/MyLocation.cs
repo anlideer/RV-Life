@@ -75,6 +75,11 @@ public class MyLocation
 
     public bool MoveAlongRoute(float d)
     {
+        // double the speed
+        int fac = PlayerPrefs.GetInt("Speed", 1);
+        Debug.Log(fac);
+        d = d * fac;
+
         // TODO: make it like a seeting
         // consume energy and fuel
         float energyCell = 0.0003f;

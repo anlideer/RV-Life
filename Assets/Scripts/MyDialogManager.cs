@@ -293,7 +293,8 @@ public class MyDialogManager : MonoBehaviour
     {
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
         DialogManager manager = obj.GetComponent<DialogManager>();
-    
+
+        Random.InitState(System.Environment.TickCount);
         if (manager.Result == "2")
         {
             int profit = Random.Range(15, 21);
