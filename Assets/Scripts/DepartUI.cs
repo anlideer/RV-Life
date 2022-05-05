@@ -108,6 +108,7 @@ public class DepartUI : MonoBehaviour
     // depart
     public void Depart()
     {
+        GlobalStates.isStopped = false;
         if (route == null)
         {
             Text popUp = Instantiate(popUpText, canvas);
