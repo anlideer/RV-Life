@@ -55,7 +55,7 @@ public class MyDialogManager : MonoBehaviour
 
     public static void Show(string plainText)
     {
-
+        SetGameStop(true);
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
         if (!obj)
             obj = Instantiate(Resources.Load("DialogAsset") as GameObject);

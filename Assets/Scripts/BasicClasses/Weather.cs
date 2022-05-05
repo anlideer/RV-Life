@@ -67,23 +67,27 @@ public class Weather
     public string GetForecast()
     {
         float r = Random.value;
+        string res = "";
         // correct
         if (r < 0.9f)
         {
             if (nextDayWeather == WeatherType.NORMAL)
-                return "Next day will not rain.";
+                res = "Next day will not rain.";
             else if (nextDayWeather == WeatherType.RAIN)
-                return "Next day will rain.";
+                res = "Next day will rain.";
             else
-                return "Next day will be rainstorm!";
+                res = "Next day will be rainstorm!";
         }
         // wrong
         else
         {
             if (nextDayWeather == WeatherType.NORMAL)
-                return "Next day will rain.";
+                res =  "Next day will rain.";
             else
-                return "Next day will not rain.";
+                res =  "Next day will not rain.";
         }
+
+        res += " (Note that forecast may not be correct.)";
+        return res;
     }
 }

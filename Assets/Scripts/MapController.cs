@@ -80,9 +80,7 @@ public class MapController : MonoBehaviour
         var r = departUI.route;
         if (r != null)
         {
-            Debug.Log(pos);
             Vector3 des = nodeDic[r.destination.cityName].transform.position;
-            Debug.Log(des);
             pos = (pos + des) / 2;
         }
         
