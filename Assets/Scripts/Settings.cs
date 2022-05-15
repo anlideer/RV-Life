@@ -10,6 +10,7 @@ public class Settings : MonoBehaviour
     public Toggle normalSpeed;
     public Toggle fastSpeed;
     public Toggle veryFastSpeed;
+    public Toggle muteMusic;
 
     private void OnEnable()
     {
@@ -29,6 +30,9 @@ public class Settings : MonoBehaviour
             fastSpeed.isOn = true;
         else
             veryFastSpeed.isOn = true;
+
+        GameObject obj = GameObject.FindGameObjectWithTag("Music");
+        muteMusic.isOn = obj.GetComponent<AudioSource>().mute;
     }
 
     public void ClosePanel()
@@ -69,5 +73,36 @@ public class Settings : MonoBehaviour
             PlayerPrefs.SetInt("Speed", 2);
         else if (veryFastSpeed.isOn)
             PlayerPrefs.SetInt("Speed", 3);
+    }
+
+    public void OpenHelp()
+    {
+        MyDialogManager.Show(new List<string> {
+            "The goal is to go to Hongkong (somewhere south near the sea) and Mohe (the northest) with limited money.",
+            "In this setting panel, you can set a higher speed to make the test quicker.",
+            "You can drag and zoom the map and click to select destination. The info is shown in the right bottom corner.",
+            "You can enter the van's page (left bottom corner) when you stop.",
+            "In the van's page, you can rest and do many things. There are also some more activities if you click the phone (right bottom corner).",
+            "There is a simple weather system, but the possibility of rain or rainstorm is pretty low. If you encounter that, you're lucky...",
+            "Watch out your body's conditions and your van's states.",
+        }) ;
+    }
+
+    public void MuteMusic()
+    {
+        GameObject obj = GameObject.FindGameObjectWithTag("Music");
+        
+        if (muteMusic.isOn)
+        {
+            obj.GetComponent<AudioSource>().mute = true;
+            PlayerPrefs.SetInt("Music", 0);
+        }
+            
+        else
+        {
+            obj.GetComponent<AudioSource>().mute = false;
+            PlayerPrefs.SetInt("Music", 1);
+        }
+            
     }
 }

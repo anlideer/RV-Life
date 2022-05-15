@@ -597,8 +597,8 @@ MonoBehaviour:
   waterPanel: {fileID: 1961916118}
   gasPanel: {fileID: 1990477254}
   waterText: {fileID: 903381747}
-  greyText: {fileID: 1379120607}
-  blackText: {fileID: 1663417101}
+  greyText: {fileID: 1663417101}
+  blackText: {fileID: 1379120607}
 --- !u!114 &431440318
 MonoBehaviour:
   m_ObjectHideFlags: 0

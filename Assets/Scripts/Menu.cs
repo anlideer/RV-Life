@@ -21,11 +21,17 @@ public class Menu : MonoBehaviour
             continueButton.interactable = true;
     }
 
+    private void Start()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Music");
+        if (objs.Length > 1)
+            Destroy(objs[0]);
+    }
+
     public void StartNewGame()
     {
-        // TODO: load the scene with opening story
 
-        SceneManager.LoadScene("Map");
+        SceneManager.LoadScene("OpenStory");
     }
 
     public void ContinueGame()

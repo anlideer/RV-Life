@@ -9,6 +9,7 @@ TagManager:
   - Arrow
   - MapUILayer
   - Dialog
+  - Music
   layers:
   - Default
   - TransparentFX

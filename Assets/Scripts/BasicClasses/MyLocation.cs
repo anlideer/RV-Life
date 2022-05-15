@@ -51,6 +51,7 @@ public class MyLocation
         detail = det;
         route = null;
         distanceFromStart = 0;
+
     }
 
     public void StopAtStation()

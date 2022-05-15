@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GlobalStates: MonoBehaviour
 {
     public static MyTime currentTime = new MyTime(1, 8, 0);
-    public static MyMoney currentMoney = new MyMoney(6000f);
+    public static MyMoney currentMoney = new MyMoney(7000f);
     public static MyLocation currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
     public static Weather currentWeather = new Weather();
     public static float currentHealth = 1f; // 0-1f
@@ -17,6 +17,10 @@ public class GlobalStates: MonoBehaviour
     public static bool isStopped = false;
     public static bool isDriving = false;
     public static bool isSleeping = false;
+
+    // story
+    public static bool hk = false;
+    public static bool mohe = false;
 
     private float timeCnt;
 
@@ -35,6 +39,36 @@ public class GlobalStates: MonoBehaviour
                 CheckConditions();
             }
         }     
+    }
+
+    // success check
+    public static void CheckSuccess()
+    {
+        // success check
+        if (currentLocation.cityName == "Hongkong" && !hk && !mohe)
+        {
+            hk = true;
+            MyDialogManager.Show("Arrive at Hongkong! Closer to the goal.");
+        }
+        else if (currentLocation.cityName == "Mohe" && !hk && !mohe)
+        {
+            mohe = true;
+            MyDialogManager.Show("Arrive at Mohe! Closer to the goal.");
+        }
+        else if (currentLocation.cityName == "Hongkong")
+        {
+            if (mohe)
+            {
+                MyDialogManager.WinGame();
+            }
+        }
+        else if (currentLocation.cityName == "Mohe")
+        {
+            if (hk)
+            {
+                MyDialogManager.WinGame();
+            }
+        }
     }
 
 
@@ -56,7 +90,7 @@ public class GlobalStates: MonoBehaviour
             }
             else
             {
-                MyDialogManager.ShowandGameover(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
+                MyDialogManager.ShowandGameover(new List<string> { "Your health goes to zero, and you don't have enough money, your journey stops here.", "Game Over." });
             }
         }
 
@@ -88,7 +122,7 @@ public class GlobalStates: MonoBehaviour
             }
             else
             {
-                MyDialogManager.ShowandGameover(new List<string> { "You don't have enough money, your journey stops here.", "Game Over." });
+                MyDialogManager.ShowandGameover(new List<string> { "Your van is out of fuel, and you don't have enough money, your journey stops here.", "Game Over." });
             }
         }
 

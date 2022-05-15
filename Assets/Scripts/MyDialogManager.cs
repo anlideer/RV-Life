@@ -31,6 +31,39 @@ public class MyDialogManager : MonoBehaviour
     {
         DialogFinished();
         SceneManager.LoadScene("Menu");
+        GlobalStates.currentTime = new MyTime(1, 8, 0);
+        GlobalStates.currentMoney = new MyMoney(7000f);
+        GlobalStates.currentLocation = new MyLocation("Chengdu", LocationDetail.PARKING);
+        GlobalStates.currentWeather = new Weather();
+        GlobalStates.currentHealth = 1f; // 0-1f
+        GlobalStates.currentEnergy = 1f; // 0-1f
+        GlobalStates.currentFuel = 1f;   // 0-1f
+        GlobalStates.currentBattery = 1f;    // 0-1f
+        GlobalStates.currentClean = 1f;  // 0-1f
+        GlobalStates.isStopped = false;
+        GlobalStates.isDriving = false;
+        GlobalStates.isSleeping = false;
+        VanStates.waterTank = 1f;
+        VanStates.greyTank = 0f;
+        VanStates.blackTank = 0f;
+        VanStates.greyCondition = 1f;
+        VanStates.blackCondition = 1f;
+        VanStates.shown = false;
+}
+
+    // win the game
+    public static void WinGame()
+    {
+        SetGameStop(true);
+        GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
+        if (!obj)
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        DialogManager manager = obj.GetComponent<DialogManager>();
+
+        DialogData d = new DialogData("Success! You win the game! (sorry this is a little crude)");
+        manager.Show(d);
+        d.Callback = () => EndGame();
+
     }
 
     public static void Show(List<string> plainTexts)
@@ -107,7 +140,7 @@ public class MyDialogManager : MonoBehaviour
         if (manager.Result == "1h")
         {
             GlobalStates.isSleeping = true;
-            Show("Resting for one hours/speed:down/.../speed:init/");
+            Show("Resting for one hour/speed:down/.../speed:init/");
             GlobalStates.currentTime.TimePass(new MyTime(0, 1, 0));
             GlobalStates.ChangeEnergy(0.1f);
             GlobalStates.isSleeping = false;
@@ -282,6 +315,11 @@ public class MyDialogManager : MonoBehaviour
         GameObject obj = GameObject.FindGameObjectWithTag("Dialog");
         if (!obj)
             obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        else
+        {
+            Destroy(obj);
+            obj = Instantiate(Resources.Load("DialogAsset") as GameObject);
+        }
         DialogManager manager = obj.GetComponent<DialogManager>();
         manager.Show(dd);
     }

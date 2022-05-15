@@ -9,7 +9,7 @@ public class VanStates : MonoBehaviour
     public static float blackTank = 0f;
     public static float greyCondition = 1f;
     public static float blackCondition = 1f;
-
+    public static bool shown = false;
 
     // change must be positive
     // return the actual amount consumed
@@ -60,14 +60,19 @@ public class VanStates : MonoBehaviour
 
     public static void CheckConditions()
     {
-        if (waterTank <= 0f)
-            MyDialogManager.Show("The water container is empty.");
-        if (greyTank >= 1f)
+        if (waterTank <= 0f && !shown)
         {
+            shown = true;
+            MyDialogManager.Show("The water container is empty.");
+        }
+        if (greyTank >= 1f && !shown)
+        {
+            shown = true;
             MyDialogManager.Show("The grey container is full. Will harm its condition.");
         }
-        if (blackTank >= 1f)
+        if (blackTank >= 1f && !shown)
         {
+            shown = true;
             MyDialogManager.Show("The black container is full. Will harm its condition.");
         }
         // conditions
@@ -114,6 +119,7 @@ public class VanStates : MonoBehaviour
 
     public static void MaintainSystem()
     {
+        shown = false;
         float m = 0.2f;
         greyCondition += m;
         blackCondition += m;

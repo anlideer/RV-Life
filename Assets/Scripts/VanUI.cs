@@ -49,6 +49,7 @@ public class VanUI : MonoBehaviour
         MyDialogManager.Show("Refill water container/speed:down/.../speed:init/");
         GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
         VanStates.waterTank = 1f;
+        VanStates.shown = false;
     }
 
     public void EmptyGreyBox(float duration)
@@ -57,6 +58,7 @@ public class VanUI : MonoBehaviour
         MyDialogManager.Show("Empty grey container/speed:down/.../speed:init/");
         GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
         VanStates.greyTank = 0f;
+        VanStates.shown = false;
     }
 
     public void EmptyBlackBox(float duration)
@@ -65,6 +67,7 @@ public class VanUI : MonoBehaviour
         MyDialogManager.Show("Empty black container/speed:down/.../speed:init/");
         GlobalStates.currentTime.TimePass(new MyTime(0, 0, 30));
         VanStates.blackTank = 0f;
+        VanStates.shown = false;
     }
 
     public void MaintainWaterSystem(float duration)
@@ -75,6 +78,7 @@ public class VanUI : MonoBehaviour
         GlobalStates.currentTime.TimePass(new MyTime(0, 4, 0));
         VanStates.greyCondition += 0.2f;
         VanStates.blackCondition += 0.2f;
+        VanStates.shown = false;
     }
 
     // back to map
